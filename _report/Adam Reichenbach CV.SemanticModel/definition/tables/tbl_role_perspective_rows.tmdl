@@ -1,0 +1,155 @@
+table tbl_role_perspective_rows
+	lineageTag: cc41c63b-d2df-4d2c-820a-a85a27af9b90
+
+	column perspective_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 59802836-2952-4236-b5b9-e2380fd0f626
+		summarizeBy: none
+		sourceColumn: perspective_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column group_label
+		dataType: string
+		lineageTag: 8eea5853-6722-4444-9847-32e6ef9c603c
+		summarizeBy: none
+		sourceColumn: group_label
+
+		annotation SummarizationSetBy = Automatic
+
+	column skill_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 92ffff4f-6615-4335-aa45-57f711a6ee9f
+		summarizeBy: none
+		sourceColumn: skill_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column role_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 70a932d1-5644-4b85-bb1c-658514ff635e
+		summarizeBy: none
+		sourceColumn: role_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column role_identity
+		dataType: string
+		lineageTag: ab749f35-8364-404a-a724-0a474ab8aacb
+		summarizeBy: none
+		sourceColumn: role_identity
+		sortByColumn: role_from_month_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column role_period
+		dataType: string
+		lineageTag: ccdd09b5-fbcb-4b59-8a40-ad2857c34dfa
+		summarizeBy: none
+		sourceColumn: role_period
+
+		annotation SummarizationSetBy = Automatic
+
+	column role_industry_name
+		dataType: string
+		lineageTag: 891d263d-66af-4c3e-9491-1034fee14013
+		summarizeBy: none
+		sourceColumn: role_industry_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column role_function_name
+		dataType: string
+		lineageTag: 9503c8f6-9912-45af-a668-d84403479094
+		summarizeBy: none
+		sourceColumn: role_function_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column role_from_month_code
+		dataType: int64
+		formatString: 0
+		lineageTag: 832d4980-d98a-4f15-a8d4-633c05596418
+		summarizeBy: none
+		sourceColumn: role_from_month_code
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbl_role_perspective_rows = m
+		mode: import
+		source =
+				let
+				    roles = Table.AddColumn(tbl_roles, "role_from_month_code", each [from_month_code], Int64.Type),
+				
+				    keep = {"perspective_id", "group_label", "skill_id", "role_id",
+				            "role_identity", "role_period",
+				            "role_industry_name", "role_function_name", "role_from_month_code"},
+				
+				    timeline_rows =
+				        Table.SelectColumns(
+				            Table.AddColumn(
+				                Table.AddColumn(
+				                    Table.AddColumn(roles, "perspective_id", each 1, Int64.Type),
+				                    "group_label", each [timeline_group], type text),
+				                "skill_id", each null, Int64.Type),
+				            keep),
+				
+				    industry_rows =
+				        Table.SelectColumns(
+				            Table.AddColumn(
+				                Table.AddColumn(
+				                    Table.AddColumn(roles, "perspective_id", each 3, Int64.Type),
+				                    "group_label", each [role_industry_name], type text),
+				                "skill_id", each null, Int64.Type),
+				            keep),
+				
+				    skill_pairs =
+				        Table.ExpandTableColumn(
+				            Table.NestedJoin(
+				                Table.SelectColumns(tbl_role_skill, {"role_id", "skill_id"}), {"skill_id"},
+				                Table.SelectColumns(tbl_skills, {"skill_id", "skill_name"}), {"skill_id"},
+				                "s", JoinKind.Inner),
+				            "s", {"skill_name"}, {"skill_name"}),
+				
+				    skill_rows_joined =
+				        Table.ExpandTableColumn(
+				            Table.NestedJoin(
+				                skill_pairs, {"role_id"},
+				                roles, {"role_id"},
+				                "p", JoinKind.Inner),
+				            "p",
+				            {"role_identity", "role_period", "role_industry_name", "role_function_name", "role_from_month_code"},
+				            {"role_identity", "role_period", "role_industry_name", "role_function_name", "role_from_month_code"}),
+				
+				    skill_rows =
+				        Table.SelectColumns(
+				            Table.AddColumn(
+				                Table.AddColumn(skill_rows_joined, "perspective_id", each 2, Int64.Type),
+				                "group_label", each [skill_name], type text),
+				            keep),
+				
+				    combined = Table.Combine({timeline_rows, skill_rows, industry_rows}),
+				
+				    #"Changed Type" =
+				        Table.TransformColumnTypes(
+				            combined,
+				            {
+				                {"perspective_id", Int64.Type},
+				                {"group_label", type text},
+				                {"skill_id", Int64.Type},
+				                {"role_id", Int64.Type},
+				                {"role_identity", type text},
+				                {"role_period", type text},
+				                {"role_industry_name", type text},
+				                {"role_function_name", type text},
+				                {"role_from_month_code", Int64.Type}
+				            }
+				        )
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

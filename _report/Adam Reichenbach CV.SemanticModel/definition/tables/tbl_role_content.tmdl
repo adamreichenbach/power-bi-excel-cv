@@ -1,0 +1,71 @@
+table tbl_role_content
+	lineageTag: f728bce2-0241-412b-a570-1c571baf8267
+
+	column role_content_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 1f3edc03-9437-4a78-aa19-ecb6ef4c649f
+		summarizeBy: none
+		sourceColumn: role_content_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column role_id
+		dataType: int64
+		formatString: 0
+		lineageTag: eb643383-7404-4d19-84f7-2356029082e4
+		summarizeBy: none
+		sourceColumn: role_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column view
+		dataType: string
+		lineageTag: 3e8c0280-1f8a-42ce-bba1-a6e129a92467
+		summarizeBy: none
+		sourceColumn: view
+
+		annotation SummarizationSetBy = Automatic
+
+	column detail_level
+		dataType: string
+		lineageTag: 2ca42d35-5dfe-4e11-a6d5-3a2ceafe1033
+		summarizeBy: none
+		sourceColumn: detail_level
+
+		annotation SummarizationSetBy = Automatic
+
+	column text
+		dataType: string
+		lineageTag: 0fde34bb-12bb-40f0-b5af-0160b517f22c
+		summarizeBy: none
+		sourceColumn: text
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbl_role_content = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(
+				        File.Contents(#"cv_source_path"),
+				        null,
+				        true
+				    ),
+				    tbl_role_content_Table = Source{[Item = "tbl_role_content", Kind = "Table"]}[Data],
+				    #"Changed Type" =
+				        Table.TransformColumnTypes(
+				            tbl_role_content_Table,
+				            {
+				                {"role_content_id", Int64.Type},
+				                {"role_id", Int64.Type},
+				                {"view", type text},
+				                {"detail_level", type text},
+				                {"text", type text}
+				            }
+				        )
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

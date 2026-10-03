@@ -1,0 +1,71 @@
+table dim_calendar
+	lineageTag: 0fb617b5-33eb-495c-b7ac-e09394b7a71b
+	dataCategory: Time
+
+	column year
+		dataType: int64
+		formatString: 0
+		lineageTag: 5485eef1-5cdb-48a1-9a21-c38167e21409
+		summarizeBy: none
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_short_name
+		dataType: string
+		lineageTag: 0a2632b4-a764-4efb-8ce8-bd0a7a8901ff
+		summarizeBy: none
+		sourceColumn: month_short_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_start
+		dataType: dateTime
+		formatString: mmm yyyy
+		lineageTag: 58a71d52-79a2-4255-9201-d3e4ffa7ea8c
+		summarizeBy: none
+		sourceColumn: month_start
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column year_month
+		dataType: int64
+		formatString: 0
+		lineageTag: 4f6f45d0-c985-49e0-8c68-faf94070f923
+		summarizeBy: none
+		sourceColumn: year_month
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_number
+		dataType: int64
+		formatString: 0
+		lineageTag: 299e14ee-4940-493c-a1e2-4a597fd278d9
+		summarizeBy: none
+		sourceColumn: month_number
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_calendar = m
+		mode: import
+		source =
+				let
+				    first_month = List.Min(List.Combine({tbl_roles[from_month_code], tbl_projects[from_month_code]})),
+				    last_month = Number.From(latest_publish_month),
+				    first_date = #date(Number.IntegerDivide(first_month, 100), Number.Mod(first_month, 100), 1),
+				    month_count =
+				        (Number.IntegerDivide(last_month, 100) - Date.Year(first_date)) * 12
+				        + Number.Mod(last_month, 100) - Date.Month(first_date) + 1,
+				    months = List.Transform({0..month_count - 1}, each Date.AddMonths(first_date, _)),
+				    Source = Table.FromColumns({months}, type table [month_start = date]),
+				    #"Added year_month" = Table.AddColumn(Source, "year_month", each Date.Year([month_start]) * 100 + Date.Month([month_start]), Int64.Type),
+				    #"Added year" = Table.AddColumn(#"Added year_month", "year", each Date.Year([month_start]), Int64.Type),
+				    #"Added month_number" = Table.AddColumn(#"Added year", "month_number", each Date.Month([month_start]), Int64.Type),
+				    #"Added month_short_name" = Table.AddColumn(#"Added month_number", "month_short_name", each Date.ToText([month_start], [Format = "MMM", Culture = "en-US"]), type text)
+				in
+				    #"Added month_short_name"
+
+	annotation PBI_ResultType = Table
+

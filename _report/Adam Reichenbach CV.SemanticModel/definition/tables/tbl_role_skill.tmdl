@@ -1,0 +1,64 @@
+table tbl_role_skill
+	lineageTag: 6874e29c-2e85-4040-a158-25ae0c8d4128
+
+	column role_skill_id
+		dataType: int64
+		formatString: 0
+		lineageTag: eaa09c5c-1618-4b52-8640-a55a6f15f976
+		summarizeBy: none
+		sourceColumn: role_skill_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column role_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 1c752fe2-4ddd-46c1-8af5-ebc55a5c0d49
+		summarizeBy: none
+		sourceColumn: role_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column skill_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 7ae1208e-c3cc-428a-ad00-843bb6fee3c9
+		summarizeBy: none
+		sourceColumn: skill_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column context_relevance_level
+		dataType: int64
+		formatString: 0
+		lineageTag: 8c24275f-4ef4-4fa6-9a43-6b2b1013ddf9
+		summarizeBy: none
+		sourceColumn: context_relevance_level
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbl_role_skill = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(
+				        File.Contents(#"cv_source_path"),
+				        null,
+				        true
+				    ),
+				    tbl_role_skill_Table = Source{[Item = "tbl_role_skill", Kind = "Table"]}[Data],
+				    #"Changed Type" =
+				        Table.TransformColumnTypes(
+				            tbl_role_skill_Table,
+				            {
+				                {"role_skill_id", Int64.Type},
+				                {"role_id", Int64.Type},
+				                {"skill_id", Int64.Type},
+				                {"context_relevance_level", Int64.Type}
+				            }
+				        )
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Exception
+

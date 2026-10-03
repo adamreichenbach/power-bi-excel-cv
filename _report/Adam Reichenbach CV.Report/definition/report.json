@@ -1,0 +1,452 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.3.0/schema.json",
+  "themeCollection": {
+    "baseTheme": {
+      "name": "CY26SU05",
+      "reportVersionAtImport": {
+        "visual": "2.9.0",
+        "report": "3.3.0",
+        "page": "2.3.1"
+      },
+      "type": "SharedResources"
+    }
+  },
+  "objects": {
+    "section": [
+      {
+        "properties": {
+          "verticalAlignment": {
+            "expr": {
+              "Literal": {
+                "Value": "'Top'"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspacePane": [
+      {
+        "properties": {
+          "expanded": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "resourcePackages": [
+    {
+      "name": "SharedResources",
+      "type": "SharedResources",
+      "items": [
+        {
+          "name": "CY26SU05",
+          "path": "BaseThemes/CY26SU05.json",
+          "type": "BaseTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "01_exec_base.png",
+          "path": "01_exec_base.png",
+          "type": "Image"
+        },
+        {
+          "name": "01_exec_hover.png",
+          "path": "01_exec_hover.png",
+          "type": "Image"
+        },
+        {
+          "name": "01_exec_select.png",
+          "path": "01_exec_select.png",
+          "type": "Image"
+        },
+        {
+          "name": "02_experience_base.png",
+          "path": "02_experience_base.png",
+          "type": "Image"
+        },
+        {
+          "name": "02_experience_hover.png",
+          "path": "02_experience_hover.png",
+          "type": "Image"
+        },
+        {
+          "name": "02_experience_select.png",
+          "path": "02_experience_select.png",
+          "type": "Image"
+        },
+        {
+          "name": "03_project_base.png",
+          "path": "03_project_base.png",
+          "type": "Image"
+        },
+        {
+          "name": "03_project_hover.png",
+          "path": "03_project_hover.png",
+          "type": "Image"
+        },
+        {
+          "name": "03_project_select.png",
+          "path": "03_project_select.png",
+          "type": "Image"
+        },
+        {
+          "name": "04_tech_base.png",
+          "path": "04_tech_base.png",
+          "type": "Image"
+        },
+        {
+          "name": "04_tech_hover.png",
+          "path": "04_tech_hover.png",
+          "type": "Image"
+        },
+        {
+          "name": "04_tech_select.png",
+          "path": "04_tech_select.png",
+          "type": "Image"
+        },
+        {
+          "name": "07_skills_base.png",
+          "path": "07_skills_base.png",
+          "type": "Image"
+        },
+        {
+          "name": "07_skills_hover.png",
+          "path": "07_skills_hover.png",
+          "type": "Image"
+        },
+        {
+          "name": "07_skills_select.png",
+          "path": "07_skills_select.png",
+          "type": "Image"
+        },
+        {
+          "name": "05_education_base.png",
+          "path": "05_education_base.png",
+          "type": "Image"
+        },
+        {
+          "name": "05_education_hover.png",
+          "path": "05_education_hover.png",
+          "type": "Image"
+        },
+        {
+          "name": "05_education_select.png",
+          "path": "05_education_select.png",
+          "type": "Image"
+        },
+        {
+          "name": "06_additional_base.png",
+          "path": "06_additional_base.png",
+          "type": "Image"
+        },
+        {
+          "name": "06_additional_hover.png",
+          "path": "06_additional_hover.png",
+          "type": "Image"
+        },
+        {
+          "name": "06_additional_select.png",
+          "path": "06_additional_select.png",
+          "type": "Image"
+        },
+        {
+          "name": "background.png",
+          "path": "background.png",
+          "type": "Image"
+        },
+        {
+          "name": "exec_portrait.png",
+          "path": "exec_portrait.png",
+          "type": "Image"
+        },
+        {
+          "name": "grid_header_exec.png",
+          "path": "grid_header_exec.png",
+          "type": "Image"
+        },
+        {
+          "name": "grid_header_projects_exp.png",
+          "path": "grid_header_projects_exp.png",
+          "type": "Image"
+        },
+        {
+          "name": "grid_header_tech.png",
+          "path": "grid_header_tech.png",
+          "type": "Image"
+        },
+        {
+          "name": "grid_header_skills.png",
+          "path": "grid_header_skills.png",
+          "type": "Image"
+        },
+        {
+          "name": "grid_header_edu.png",
+          "path": "grid_header_edu.png",
+          "type": "Image"
+        },
+        {
+          "name": "grid_header_additional.png",
+          "path": "grid_header_additional.png",
+          "type": "Image"
+        },
+        {
+          "name": "ico_clear_filters_disabled.png",
+          "path": "ico_clear_filters_disabled.png",
+          "type": "Image"
+        },
+        {
+          "name": "ico_clear_filters.png",
+          "path": "ico_clear_filters.png",
+          "type": "Image"
+        },
+        {
+          "name": "ico_detail_compact_disabled.png",
+          "path": "ico_detail_compact_disabled.png",
+          "type": "Image"
+        },
+        {
+          "name": "ico_detail_compact.png",
+          "path": "ico_detail_compact.png",
+          "type": "Image"
+        },
+        {
+          "name": "ico_detail_standard_disabled.png",
+          "path": "ico_detail_standard_disabled.png",
+          "type": "Image"
+        },
+        {
+          "name": "ico_detail_standard.png",
+          "path": "ico_detail_standard.png",
+          "type": "Image"
+        },
+        {
+          "name": "ico_dialog_close.png",
+          "path": "ico_dialog_close.png",
+          "type": "Image"
+        },
+        {
+          "name": "ico_dialog_warning.png",
+          "path": "ico_dialog_warning.png",
+          "type": "Image"
+        },
+        {
+          "name": "ico_filter_function_disabled.png",
+          "path": "ico_filter_function_disabled.png",
+          "type": "Image"
+        },
+        {
+          "name": "ico_filter_function.png",
+          "path": "ico_filter_function.png",
+          "type": "Image"
+        },
+        {
+          "name": "ico_filter_industry_disabled.png",
+          "path": "ico_filter_industry_disabled.png",
+          "type": "Image"
+        },
+        {
+          "name": "ico_filter_industry.png",
+          "path": "ico_filter_industry.png",
+          "type": "Image"
+        },
+        {
+          "name": "ico_filter_skill_disabled.png",
+          "path": "ico_filter_skill_disabled.png",
+          "type": "Image"
+        },
+        {
+          "name": "ico_filter_skill.png",
+          "path": "ico_filter_skill.png",
+          "type": "Image"
+        },
+        {
+          "name": "ico_filter_tool_disabled.png",
+          "path": "ico_filter_tool_disabled.png",
+          "type": "Image"
+        },
+        {
+          "name": "ico_filter_tool.png",
+          "path": "ico_filter_tool.png",
+          "type": "Image"
+        },
+        {
+          "name": "ico_help.png",
+          "path": "ico_help.png",
+          "type": "Image"
+        },
+        {
+          "name": "ico_perspective_industries_disabled.png",
+          "path": "ico_perspective_industries_disabled.png",
+          "type": "Image"
+        },
+        {
+          "name": "ico_perspective_industries.png",
+          "path": "ico_perspective_industries.png",
+          "type": "Image"
+        },
+        {
+          "name": "ico_perspective_skills_disabled.png",
+          "path": "ico_perspective_skills_disabled.png",
+          "type": "Image"
+        },
+        {
+          "name": "ico_perspective_skills.png",
+          "path": "ico_perspective_skills.png",
+          "type": "Image"
+        },
+        {
+          "name": "ico_perspective_timeline_disabled.png",
+          "path": "ico_perspective_timeline_disabled.png",
+          "type": "Image"
+        },
+        {
+          "name": "ico_perspective_timeline.png",
+          "path": "ico_perspective_timeline.png",
+          "type": "Image"
+        },
+        {
+          "name": "ico_view_list_disabled.png",
+          "path": "ico_view_list_disabled.png",
+          "type": "Image"
+        },
+        {
+          "name": "ico_view_list.png",
+          "path": "ico_view_list.png",
+          "type": "Image"
+        },
+        {
+          "name": "ico_view_story_disabled.png",
+          "path": "ico_view_story_disabled.png",
+          "type": "Image"
+        },
+        {
+          "name": "ico_view_story.png",
+          "path": "ico_view_story.png",
+          "type": "Image"
+        },
+        {
+          "name": "overlay_about_base.png",
+          "path": "overlay_about_base.png",
+          "type": "Image"
+        },
+        {
+          "name": "overlay_about_hover.png",
+          "path": "overlay_about_hover.png",
+          "type": "Image"
+        },
+        {
+          "name": "overlay_about_selected.png",
+          "path": "overlay_about_selected.png",
+          "type": "Image"
+        },
+        {
+          "name": "overlay_background.png",
+          "path": "overlay_background.png",
+          "type": "Image"
+        },
+        {
+          "name": "overlay_contact_base.png",
+          "path": "overlay_contact_base.png",
+          "type": "Image"
+        },
+        {
+          "name": "overlay_contact_hover.png",
+          "path": "overlay_contact_hover.png",
+          "type": "Image"
+        },
+        {
+          "name": "overlay_contact_selected.png",
+          "path": "overlay_contact_selected.png",
+          "type": "Image"
+        },
+        {
+          "name": "overlay_help_base.png",
+          "path": "overlay_help_base.png",
+          "type": "Image"
+        },
+        {
+          "name": "overlay_help_clippy.png",
+          "path": "overlay_help_clippy.png",
+          "type": "Image"
+        },
+        {
+          "name": "overlay_help_hover.png",
+          "path": "overlay_help_hover.png",
+          "type": "Image"
+        },
+        {
+          "name": "overlay_help_selected.png",
+          "path": "overlay_help_selected.png",
+          "type": "Image"
+        },
+        {
+          "name": "overlay_special_thanks_base.png",
+          "path": "overlay_special_thanks_base.png",
+          "type": "Image"
+        },
+        {
+          "name": "overlay_special_thanks_hover.png",
+          "path": "overlay_special_thanks_hover.png",
+          "type": "Image"
+        },
+        {
+          "name": "overlay_special_thanks_selected.png",
+          "path": "overlay_special_thanks_selected.png",
+          "type": "Image"
+        },
+        {
+          "name": "ribbon_file_base.png",
+          "path": "ribbon_file_base.png",
+          "type": "Image"
+        },
+        {
+          "name": "ribbon_file_hover.png",
+          "path": "ribbon_file_hover.png",
+          "type": "Image"
+        },
+        {
+          "name": "ribbon_home_base.png",
+          "path": "ribbon_home_base.png",
+          "type": "Image"
+        },
+        {
+          "name": "ribbon_home_hover.png",
+          "path": "ribbon_home_hover.png",
+          "type": "Image"
+        },
+        {
+          "name": "slicer_all_disabled.png",
+          "path": "slicer_all_disabled.png",
+          "type": "Image"
+        },
+        {
+          "name": "ico_recent_xlsx.png",
+          "path": "ico_recent_xlsx.png",
+          "type": "Image"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "useStylableVisualContainerHeader": true,
+    "exportDataMode": "None",
+    "defaultDrillFilterOtherVisuals": true,
+    "allowChangeFilterTypes": true,
+    "useEnhancedTooltips": true,
+    "useDefaultAggregateDisplayName": true,
+    "queryLimitOption": "None",
+    "customMemoryLimit": "1048576",
+    "customTimeoutLimit": "225"
+  }
+}

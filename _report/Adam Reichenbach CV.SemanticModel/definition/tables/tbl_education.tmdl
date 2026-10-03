@@ -1,0 +1,146 @@
+table tbl_education
+	lineageTag: 2d36c7bd-6e35-4568-afc3-a74e3a25770d
+
+	column education_id
+		dataType: int64
+		formatString: 0
+		lineageTag: f36291c5-1797-4281-98d9-61fb871357c8
+		summarizeBy: none
+		sourceColumn: education_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column institution
+		dataType: string
+		lineageTag: 51e9014a-4830-4c71-a686-022002ef87a7
+		summarizeBy: none
+		sourceColumn: institution
+
+		annotation SummarizationSetBy = Automatic
+
+	column qualification
+		dataType: string
+		lineageTag: 11c354ab-8791-4c23-ac45-d5926814afa7
+		summarizeBy: none
+		sourceColumn: qualification
+
+		annotation SummarizationSetBy = Automatic
+
+	column from_month_code
+		dataType: int64
+		formatString: 0
+		lineageTag: 41e81530-2713-491d-a22c-03f2fa5887c2
+		summarizeBy: none
+		sourceColumn: from_month_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column to_month_code
+		dataType: int64
+		formatString: 0
+		lineageTag: 94a859a3-1f77-4e40-b167-cd5c86a9e9d4
+		summarizeBy: none
+		sourceColumn: to_month_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column location
+		dataType: string
+		lineageTag: fa4f1393-35d4-416c-88ef-d074195bc6f2
+		summarizeBy: none
+		sourceColumn: location
+
+		annotation SummarizationSetBy = Automatic
+
+	column education_identity
+		dataType: string
+		lineageTag: 933db4fc-9141-44f3-923b-4e1adc216301
+		summarizeBy: none
+		sourceColumn: education_identity
+		sortByColumn: education_sort_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column education_period
+		dataType: string
+		lineageTag: 2e07b582-f22e-44bf-8fc7-8bea3ca39b87
+		summarizeBy: none
+		sourceColumn: education_period
+
+		annotation SummarizationSetBy = Automatic
+
+	column education_sort_key
+		dataType: int64
+		formatString: 0
+		lineageTag: deacce7e-a4e0-456c-aae3-3cb1a096e08d
+		summarizeBy: none
+		sourceColumn: education_sort_key
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbl_education = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(
+				        File.Contents(#"cv_source_path"),
+				        null,
+				        true
+				    ),
+				    tbl_education_Table = Source{[Item = "tbl_education", Kind = "Table"]}[Data],
+				    #"Changed Type" =
+				        Table.TransformColumnTypes(
+				            tbl_education_Table,
+				            {
+				                {"education_id", Int64.Type},
+				                {"institution", type text},
+				                {"qualification", type text},
+				                {"from_month_code", Int64.Type},
+				                {"to_month_code", Int64.Type},
+				                {"location", type text}
+				            }
+				        ),
+				
+				    fn_month_text = (code as nullable number) as nullable text =>
+				        if code = null then null
+				        else if code = 999912 then "present"
+				        else Date.ToText(
+				            #date(Number.IntegerDivide(code, 100), Number.Mod(code, 100), 1),
+				            [Format = "MMM yyyy", Culture = "en-GB"]
+				        ),
+				
+				    #"Added education_identity" =
+				        Table.AddColumn(
+				            #"Changed Type",
+				            "education_identity",
+				            each
+				                if [institution] = null then [qualification]
+				                else [institution] & "  -  " & [qualification],
+				            type text
+				        ),
+				
+				    #"Added education_period" =
+				        Table.AddColumn(
+				            #"Added education_identity",
+				            "education_period",
+				            each
+				                let
+				                    period_from = fn_month_text([from_month_code]),
+				                    period_to   = fn_month_text([to_month_code])
+				                in
+				                    if period_from = null then null else period_from & " - " & period_to,
+				            type text
+				        ),
+				
+				    #"Added education_sort_key" =
+				        Table.AddColumn(
+				            #"Added education_period",
+				            "education_sort_key",
+				            each -[from_month_code],
+				            Int64.Type
+				        )
+				in
+				    #"Added education_sort_key"
+
+	annotation PBI_ResultType = Table
+

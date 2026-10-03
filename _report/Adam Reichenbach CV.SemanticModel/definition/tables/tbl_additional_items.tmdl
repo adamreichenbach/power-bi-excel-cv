@@ -1,0 +1,111 @@
+table tbl_additional_items
+	lineageTag: abe01abf-c093-45be-aa2e-f0b0dda1d9a1
+
+	column item_key
+		dataType: int64
+		formatString: 0
+		lineageTag: cf785737-fc7d-4274-8558-1e2c4c7e8fc3
+		summarizeBy: none
+		sourceColumn: item_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column section
+		dataType: string
+		lineageTag: d66aa492-9875-4fe7-9cf3-c58f4ee42f50
+		summarizeBy: none
+		sourceColumn: section
+
+		annotation SummarizationSetBy = Automatic
+
+	column year_label
+		dataType: string
+		lineageTag: 519e0ecb-12fb-4dc4-8da5-6998a1320592
+		summarizeBy: none
+		sourceColumn: year_label
+
+		annotation SummarizationSetBy = Automatic
+
+	column title
+		dataType: string
+		lineageTag: f6ef9016-3ca5-411c-9d70-4ff7be010a22
+		summarizeBy: none
+		sourceColumn: title
+		sortByColumn: item_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column detail
+		dataType: string
+		lineageTag: 12037f57-1c16-4e70-bab9-bb84679c2cd6
+		summarizeBy: none
+		sourceColumn: detail
+
+		annotation SummarizationSetBy = Automatic
+
+	column url
+		dataType: string
+		lineageTag: c5ee62f2-354f-46e3-867a-d2e54c0f82a4
+		dataCategory: WebUrl
+		summarizeBy: none
+		sourceColumn: url
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_highlight
+		dataType: boolean
+		lineageTag: 6c997902-3c80-4f57-99d5-f67e47e875c0
+		summarizeBy: none
+		sourceColumn: is_highlight
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbl_additional_items = m
+		mode: import
+		source =
+				let
+				    sorted = Table.Buffer(Table.Sort(tbl_additional, {{"section_order", Order.Ascending}, {"from_year", Order.Descending}, {"additional_id", Order.Ascending}})),
+				    grouped =
+				        Table.Group(
+				            sorted,
+				            {"section_order"},
+				            {{"rows", each Table.AddIndexColumn(_, "item_rank", 1, 1, Int64.Type), type table}}
+				        ),
+				    ranked = Table.Combine(grouped[rows]),
+				    #"Added item_key" =
+				        Table.AddColumn(
+				            ranked,
+				            "item_key",
+				            each (if [is_highlight] = true then 0 else 100000) + [section_order] * 1000 + [item_rank],
+				            Int64.Type
+				        ),
+				    #"Added year_label" =
+				        Table.AddColumn(
+				            #"Added item_key",
+				            "year_label",
+				            each
+				                if [from_year] = null then null
+				                else if [to_year] = [from_year] then Text.From([from_year])
+				                else Text.From([from_year]) & " - "
+				                    & (if [to_year] = 9999 then "present" else Text.From([to_year])),
+				            type text
+				        ),
+				    #"Selected Columns" = Table.SelectColumns(#"Added year_label", {"item_key", "section", "year_label", "title", "detail", "url", "is_highlight"}),
+				    #"Changed Type" =
+				        Table.TransformColumnTypes(
+				            #"Selected Columns",
+				            {
+				                {"item_key", Int64.Type},
+				                {"section", type text},
+				                {"year_label", type text},
+				                {"title", type text},
+				                {"detail", type text},
+				                {"url", type text},
+				                {"is_highlight", type logical}
+				            }
+				        )
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

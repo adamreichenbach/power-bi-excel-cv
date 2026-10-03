@@ -1,0 +1,222 @@
+table tbl_projects
+	lineageTag: 96d59b47-b85c-4349-b80d-35219843c5c5
+
+	column project_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 7763dd24-4534-40f0-b598-21e1ee24087d
+		summarizeBy: none
+		sourceColumn: project_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column employer_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 00d0b3a3-985f-47a0-813a-cb0826519d79
+		summarizeBy: none
+		sourceColumn: employer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column project_name
+		dataType: string
+		lineageTag: 7d1873b5-f08d-4875-98c2-972536253b75
+		summarizeBy: none
+		sourceColumn: project_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column industry_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 47f6e63c-6a7f-46e6-8668-ae286662e05c
+		summarizeBy: none
+		sourceColumn: industry_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column function_id
+		dataType: int64
+		formatString: 0
+		lineageTag: e849ddc5-63d3-4df5-a112-1a436305c625
+		summarizeBy: none
+		sourceColumn: function_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column from_month_code
+		dataType: int64
+		formatString: 0
+		lineageTag: 4259e9e5-64a8-419b-bd6e-444573423ffc
+		summarizeBy: none
+		sourceColumn: from_month_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column to_month_code
+		dataType: int64
+		formatString: 0
+		lineageTag: f4632a6b-c903-4155-ade3-7c23950c6777
+		summarizeBy: none
+		sourceColumn: to_month_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column project_summary_short
+		dataType: string
+		lineageTag: 457b96c9-b73d-4105-83a4-0f850381bad1
+		summarizeBy: none
+		sourceColumn: project_summary_short
+
+		annotation SummarizationSetBy = Automatic
+
+	column project_identity
+		dataType: string
+		lineageTag: 824e6543-4047-4615-9288-27d8bd141118
+		summarizeBy: none
+		sourceColumn: project_identity
+
+		annotation SummarizationSetBy = Automatic
+
+	column timeline_group
+		dataType: string
+		lineageTag: 73777c14-929d-4c07-be0f-a84ccd5488ea
+		summarizeBy: none
+		sourceColumn: timeline_group
+
+		annotation SummarizationSetBy = Automatic
+
+	column project_period
+		dataType: string
+		lineageTag: 4dfcd018-6214-40a2-8b32-a71d81cc0671
+		summarizeBy: none
+		sourceColumn: project_period
+
+		annotation SummarizationSetBy = Automatic
+
+	column project_industry_name
+		dataType: string
+		lineageTag: b16a8eda-6579-4e1e-8348-a52835f4ac93
+		summarizeBy: none
+		sourceColumn: project_industry_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column project_function_name
+		dataType: string
+		lineageTag: b0b4e3ec-f02a-4f1a-9255-d7cfb66f6299
+		summarizeBy: none
+		sourceColumn: project_function_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column to_month_code_clamped
+		dataType: int64
+		formatString: 0
+		lineageTag: 138905bf-0afc-4005-b540-46b22f464f0d
+		summarizeBy: none
+		sourceColumn: to_month_code_clamped
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbl_projects = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(
+				        File.Contents(#"cv_source_path"),
+				        null,
+				        true
+				    ),
+				    tbl_projects_Table = Source{[Item = "tbl_projects", Kind = "Table"]}[Data],
+				    #"Changed Type" =
+				        Table.TransformColumnTypes(
+				            tbl_projects_Table,
+				            {
+				                {"project_id", Int64.Type},
+				                {"employer_id", Int64.Type},
+				                {"project_name", type text},
+				                {"industry_id", Int64.Type},
+				                {"function_id", Int64.Type},
+				                {"from_month_code", Int64.Type},
+				                {"to_month_code", Int64.Type},
+				                {"project_summary_short", type text}
+				            }
+				        ),
+				
+				    fn_lookup = (src as table, key_col as text, key as any, value_col as text) as any =>
+				        let
+				            hit = Table.SelectRows(src, each Record.Field(_, key_col) = key)
+				        in
+				            if Table.IsEmpty(hit) then null else Record.Field(hit{0}, value_col),
+				
+				    fn_month_text = (code as nullable number) as nullable text =>
+				        if code = null then null
+				        else if code = 999912 then "present"
+				        else Date.ToText(
+				            #date(Number.IntegerDivide(code, 100), Number.Mod(code, 100), 1),
+				            [Format = "MMM yyyy", Culture = "en-GB"]
+				        ),
+				
+				    #"Added project_identity" =
+				        Table.AddColumn(
+				            #"Changed Type",
+				            "project_identity",
+				            each
+				                let
+				                    employer = fn_lookup(tbl_employers, "employer_id", [employer_id], "employer_name")
+				                in
+				                    if employer = null then [project_name] else employer & "  -  " & [project_name],
+				            type text
+				        ),
+				
+				    #"Added project_period" =
+				        Table.AddColumn(
+				            #"Added project_identity",
+				            "project_period",
+				            each
+				                let
+				                    period_from = fn_month_text([from_month_code]),
+				                    period_to   = fn_month_text([to_month_code])
+				                in
+				                    if period_from = null then null else period_from & " - " & period_to,
+				            type text
+				        ),
+				
+				    #"Added project_industry_name" =
+				        Table.AddColumn(
+				            #"Added project_period",
+				            "project_industry_name",
+				            each fn_lookup(tbl_industries, "industry_id", [industry_id], "industry_name"),
+				            type text
+				        ),
+				
+				    #"Added project_function_name" =
+				        Table.AddColumn(
+				            #"Added project_industry_name",
+				            "project_function_name",
+				            each fn_lookup(tbl_functions, "function_id", [function_id], "function_name"),
+				            type text
+				        ),
+				
+				    #"Added timeline_group" =
+				        Table.AddColumn(
+				            #"Added project_function_name",
+				            "timeline_group",
+				            each Text.From(Number.IntegerDivide([from_month_code], 100)),
+				            type text
+				        ),
+				
+				    #"Added to_month_code_clamped" =
+				        Table.AddColumn(
+				            #"Added timeline_group",
+				            "to_month_code_clamped",
+				            each if [to_month_code] = 999912 then Number.From(latest_publish_month) else [to_month_code],
+				            Int64.Type
+				        )
+				in
+				    #"Added to_month_code_clamped"
+
+	annotation PBI_ResultType = Exception
+

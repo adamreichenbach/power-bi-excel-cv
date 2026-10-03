@@ -1,0 +1,7 @@
+# The author's working copy reads a private workbook; commits carry the public dummy path.
+# The filter is defined in local git config only; without it the file passes through unchanged.
+_report/*.SemanticModel/definition/expressions.tmdl filter=cv_source
+
+# The report's portrait resource: the working copy shows the real photo, commits carry a neutral
+# placeholder. The source photo lives in _private/. Local-only filter, as above.
+_report/*.Report/StaticResources/RegisteredResources/exec_portrait.png filter=portrait binary

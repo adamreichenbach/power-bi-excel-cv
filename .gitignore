@@ -1,0 +1,33 @@
+# --- private / non-public ---
+# Kept out of the public repo. Essential to the project, not for publication.
+_private/
+
+# --- Claude Code: the author's private agent layer (2026-10-03) ---
+# Working method, session commands, validation hook and rules. CLAUDE.md stays public.
+.claude/
+CLAUDE.local.md
+
+# --- Claude Code local settings ---
+# Machine-local permission allowlist: absolute paths and session ids.
+.claude/settings.local.json
+
+# --- working folders ---
+# _wip/ and _archive/ moved under _private/ on 2026-09-17 and are covered by the rule above.
+scratchpad/
+
+# --- Power BI Desktop local state ---
+# Also covered by _report/.gitignore; repeated here so the root rule is self-contained.
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+
+# --- Excel lock files (left while a workbook is open) ---
+~$*
+
+# --- OS ---
+Thumbs.db
+desktop.ini
+.DS_Store

@@ -1,0 +1,155 @@
+table tbl_project_perspective_rows
+	lineageTag: 0d8f89b7-19a8-4e32-9598-9b98447755f2
+
+	column perspective_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 19d93f3c-0355-424e-90c7-980c0c1e2c6b
+		summarizeBy: none
+		sourceColumn: perspective_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column group_label
+		dataType: string
+		lineageTag: 6d2669c3-94d8-48d4-af12-203ef5f7b02f
+		summarizeBy: none
+		sourceColumn: group_label
+
+		annotation SummarizationSetBy = Automatic
+
+	column skill_id
+		dataType: int64
+		formatString: 0
+		lineageTag: a7cc6920-4c13-4bfd-81c1-9f710c0addea
+		summarizeBy: none
+		sourceColumn: skill_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column project_id
+		dataType: int64
+		formatString: 0
+		lineageTag: a99af858-44c5-4730-ae82-05d608608806
+		summarizeBy: none
+		sourceColumn: project_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column project_identity
+		dataType: string
+		lineageTag: ba60a449-0875-493e-9a69-417d074adfcc
+		summarizeBy: none
+		sourceColumn: project_identity
+		sortByColumn: project_sort_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column project_period
+		dataType: string
+		lineageTag: 117c7c99-2855-420b-89bf-1d457361c9a5
+		summarizeBy: none
+		sourceColumn: project_period
+
+		annotation SummarizationSetBy = Automatic
+
+	column project_industry_name
+		dataType: string
+		lineageTag: 39a52c13-cc2b-45a6-a1a7-66f6df267362
+		summarizeBy: none
+		sourceColumn: project_industry_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column project_function_name
+		dataType: string
+		lineageTag: 1e67ca61-156d-4d08-bf27-29d91e9b8d85
+		summarizeBy: none
+		sourceColumn: project_function_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column project_sort_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 8c7fcff4-1f6f-4d94-86c7-26607dbe8358
+		summarizeBy: none
+		sourceColumn: project_sort_key
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbl_project_perspective_rows = m
+		mode: import
+		source =
+				let
+				    projects = Table.AddColumn(tbl_projects, "project_sort_key", each [from_month_code] * 10000 + [project_id], Int64.Type),
+				
+				    keep = {"perspective_id", "group_label", "skill_id", "project_id",
+				            "project_identity", "project_period",
+				            "project_industry_name", "project_function_name", "project_sort_key"},
+				
+				    timeline_rows =
+				        Table.SelectColumns(
+				            Table.AddColumn(
+				                Table.AddColumn(
+				                    Table.AddColumn(projects, "perspective_id", each 1, Int64.Type),
+				                    "group_label", each [timeline_group], type text),
+				                "skill_id", each null, Int64.Type),
+				            keep),
+				
+				    industry_rows =
+				        Table.SelectColumns(
+				            Table.AddColumn(
+				                Table.AddColumn(
+				                    Table.AddColumn(projects, "perspective_id", each 3, Int64.Type),
+				                    "group_label", each [project_industry_name], type text),
+				                "skill_id", each null, Int64.Type),
+				            keep),
+				
+				    skill_pairs =
+				        Table.ExpandTableColumn(
+				            Table.NestedJoin(
+				                Table.SelectColumns(tbl_project_skill, {"project_id", "skill_id"}), {"skill_id"},
+				                Table.SelectColumns(tbl_skills, {"skill_id", "skill_name"}), {"skill_id"},
+				                "s", JoinKind.Inner),
+				            "s", {"skill_name"}, {"skill_name"}),
+				
+				    skill_rows_joined =
+				        Table.ExpandTableColumn(
+				            Table.NestedJoin(
+				                skill_pairs, {"project_id"},
+				                projects, {"project_id"},
+				                "p", JoinKind.Inner),
+				            "p",
+				            {"project_identity", "project_period", "project_industry_name", "project_function_name", "project_sort_key"},
+				            {"project_identity", "project_period", "project_industry_name", "project_function_name", "project_sort_key"}),
+				
+				    skill_rows =
+				        Table.SelectColumns(
+				            Table.AddColumn(
+				                Table.AddColumn(skill_rows_joined, "perspective_id", each 2, Int64.Type),
+				                "group_label", each [skill_name], type text),
+				            keep),
+				
+				    combined = Table.Combine({timeline_rows, skill_rows, industry_rows}),
+				
+				    #"Changed Type" =
+				        Table.TransformColumnTypes(
+				            combined,
+				            {
+				                {"perspective_id", Int64.Type},
+				                {"group_label", type text},
+				                {"skill_id", Int64.Type},
+				                {"project_id", Int64.Type},
+				                {"project_identity", type text},
+				                {"project_period", type text},
+				                {"project_industry_name", type text},
+				                {"project_function_name", type text},
+				                {"project_sort_key", Int64.Type}
+				            }
+				        )
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

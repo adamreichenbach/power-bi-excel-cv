@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Adam Reichenbach CV"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "4fe8d6ef-5dc2-4742-bbbb-bfaca68ab8ec"
+  }
+}

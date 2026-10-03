@@ -1,0 +1,150 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Dialog: dismiss",
+  "name": "bm_dialog_dismiss",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "btn_dialog_blocker_top",
+      "btn_dialog_blocker_bottom",
+      "btn_dialog_blocker_left",
+      "btn_dialog_blocker_gap",
+      "btn_dialog_blocker_right",
+      "shp_dialog_window",
+      "txt_dialog_title",
+      "img_dialog_close",
+      "img_dialog_warning",
+      "txt_dialog_message",
+      "btn_dialog_continue",
+      "btn_dialog_cancel",
+      "btn_dialog_veil_top",
+      "btn_dialog_veil_bottom",
+      "btn_dialog_veil_left",
+      "btn_dialog_veil_right"
+    ],
+    "suppressActiveSection": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "main",
+    "sections": {
+      "main": {
+        "visualContainers": {
+          "shp_dialog_window": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "txt_dialog_title": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_dialog_close": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_dialog_warning": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "txt_dialog_message": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "btn_dialog_continue": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "btn_dialog_cancel": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "btn_dialog_blocker_top": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "btn_dialog_blocker_bottom": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "btn_dialog_blocker_left": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "btn_dialog_blocker_gap": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "btn_dialog_blocker_right": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "btn_dialog_veil_top": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "btn_dialog_veil_bottom": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "btn_dialog_veil_left": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "btn_dialog_veil_right": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

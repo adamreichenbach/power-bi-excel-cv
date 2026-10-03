@@ -1,0 +1,64 @@
+table tbl_project_skill
+	lineageTag: 98da4e7a-ed23-44e5-bde4-a6af83381658
+
+	column project_skill_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 215cbad1-26f3-40e0-8d2d-c6cab612cf94
+		summarizeBy: none
+		sourceColumn: project_skill_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column project_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 9c51d9fe-4675-4805-a116-5d24c7438649
+		summarizeBy: none
+		sourceColumn: project_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column skill_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 2adb7b2c-a744-4614-9649-d62c5f72716c
+		summarizeBy: none
+		sourceColumn: skill_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column context_relevance_level
+		dataType: int64
+		formatString: 0
+		lineageTag: 3168f8ab-dc0a-4fea-95db-2bcfa1fbc445
+		summarizeBy: none
+		sourceColumn: context_relevance_level
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbl_project_skill = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(
+				        File.Contents(#"cv_source_path"),
+				        null,
+				        true
+				    ),
+				    tbl_project_skill_Table = Source{[Item = "tbl_project_skill", Kind = "Table"]}[Data],
+				    #"Changed Type" =
+				        Table.TransformColumnTypes(
+				            tbl_project_skill_Table,
+				            {
+				                {"project_skill_id", Int64.Type},
+				                {"project_id", Int64.Type},
+				                {"skill_id", Int64.Type},
+				                {"context_relevance_level", Int64.Type}
+				            }
+				        )
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Exception
+

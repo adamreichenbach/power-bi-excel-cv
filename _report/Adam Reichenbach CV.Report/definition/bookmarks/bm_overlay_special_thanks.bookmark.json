@@ -1,0 +1,291 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Overlay: Special thanks",
+  "name": "bm_overlay_special_thanks",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "img_overlay_background",
+      "btn_overlay_about",
+      "btn_overlay_contact",
+      "btn_overlay_help",
+      "btn_overlay_special_thanks",
+      "btn_overlay_close",
+      "img_overlay_about_selected",
+      "img_overlay_contact_selected",
+      "img_overlay_help_selected",
+      "img_overlay_special_thanks_selected",
+      "txt_title_overlay",
+      "txt_overlay_about_heading",
+      "txt_overlay_about_body",
+      "txt_overlay_about_aside",
+      "vis_overlay_about_last_updated",
+      "txt_overlay_contact_heading",
+      "vis_overlay_contact_identity",
+      "vis_overlay_contact_subtitle",
+      "vis_overlay_contact_methods",
+      "txt_overlay_contact_note",
+      "txt_overlay_help_heading",
+      "txt_overlay_help_body",
+      "img_overlay_help_clippy",
+      "txt_overlay_help_clippy_caption",
+      "txt_overlay_special_thanks_heading",
+      "txt_overlay_special_thanks_body",
+      "btn_block_contact_header",
+      "btn_block_contact_ref_row",
+      "btn_contact_email_primary",
+      "btn_contact_email_secondary",
+      "btn_contact_linkedin",
+      "txt_overlay_about_recent_heading",
+      "txt_overlay_about_recent_date_heading",
+      "img_overlay_about_recent_icon",
+      "txt_overlay_about_recent_file",
+      "btn_overlay_about_recent_open"
+    ],
+    "suppressActiveSection": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "main",
+    "sections": {
+      "main": {
+        "visualContainers": {
+          "img_overlay_background": {
+            "singleVisual": {}
+          },
+          "btn_overlay_about": {
+            "singleVisual": {}
+          },
+          "btn_overlay_contact": {
+            "singleVisual": {}
+          },
+          "btn_overlay_help": {
+            "singleVisual": {}
+          },
+          "btn_overlay_special_thanks": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "btn_overlay_close": {
+            "singleVisual": {}
+          },
+          "img_overlay_about_selected": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_overlay_contact_selected": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_overlay_help_selected": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_overlay_special_thanks_selected": {
+            "singleVisual": {}
+          },
+          "txt_title_overlay": {
+            "singleVisual": {}
+          },
+          "txt_overlay_about_heading": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "txt_overlay_about_body": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "txt_overlay_about_aside": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "txt_overlay_contact_heading": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "vis_overlay_contact_identity": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "vis_overlay_contact_subtitle": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "vis_overlay_contact_methods": {
+            "singleVisual": {
+              "activeProjections": {
+                "Rows": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "tbl_contact_methods"
+                        }
+                      },
+                      "Property": "method_label"
+                    }
+                  }
+                ]
+              },
+              "objects": {},
+              "visualType": "pivotTable",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "txt_overlay_contact_note": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "txt_overlay_help_heading": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "txt_overlay_help_body": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_overlay_help_clippy": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              },
+              "visualType": "image"
+            }
+          },
+          "txt_overlay_help_clippy_caption": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "txt_overlay_special_thanks_heading": {
+            "singleVisual": {}
+          },
+          "txt_overlay_special_thanks_body": {
+            "singleVisual": {}
+          },
+          "btn_contact_email_primary": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "btn_contact_email_secondary": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "btn_contact_linkedin": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "btn_block_contact_header": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "btn_block_contact_ref_row": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "vis_overlay_about_last_updated": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "txt_overlay_about_recent_heading": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "txt_overlay_about_recent_date_heading": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_overlay_about_recent_icon": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "txt_overlay_about_recent_file": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "btn_overlay_about_recent_open": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,52 @@
+table tbl_exec_summary_content
+	lineageTag: 04798fb5-dc61-4821-90a8-8686fecc72c6
+
+	column exec_summary_content_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 6bbeece2-29d5-4b5b-aedb-915e8b6d074f
+		summarizeBy: none
+		sourceColumn: exec_summary_content_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column detail_level
+		dataType: string
+		lineageTag: c2bf8ac5-7ce7-4159-af78-9a15a6a3e29b
+		summarizeBy: none
+		sourceColumn: detail_level
+
+		annotation SummarizationSetBy = Automatic
+
+	column text
+		dataType: string
+		lineageTag: fdd0d246-b5aa-4b2c-bff7-24123c0820df
+		summarizeBy: none
+		sourceColumn: text
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbl_exec_summary_content = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(
+				        File.Contents(#"cv_source_path"),
+				        null,
+				        true
+				    ),
+				    tbl_exec_summary_content_Table = Source{[Item = "tbl_exec_summary_content", Kind = "Table"]}[Data],
+				    #"Changed Type" =
+				        Table.TransformColumnTypes(
+				            tbl_exec_summary_content_Table,
+				            {
+				                {"exec_summary_content_id", Int64.Type},
+				                {"detail_level", type text},
+				                {"text", type text}
+				            }
+				        )
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

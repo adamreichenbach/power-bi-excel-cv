@@ -1,0 +1,43 @@
+table tbl_role_types
+	lineageTag: 94f19dc6-bead-4910-a13a-a985affe518e
+
+	column role_type_id
+		dataType: int64
+		formatString: 0
+		lineageTag: f095c52d-be34-43f2-a9f0-c84d3ab1cd92
+		summarizeBy: none
+		sourceColumn: role_type_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column role_type_name
+		dataType: string
+		lineageTag: 47847ee4-3ad0-4ecc-9348-1409b14b49b0
+		summarizeBy: none
+		sourceColumn: role_type_name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbl_role_types = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(
+				        File.Contents(#"cv_source_path"),
+				        null,
+				        true
+				    ),
+				    tbl_role_types_Table = Source{[Item = "tbl_role_types", Kind = "Table"]}[Data],
+				    #"Changed Type" =
+				        Table.TransformColumnTypes(
+				            tbl_role_types_Table,
+				            {
+				                {"role_type_id", Int64.Type},
+				                {"role_type_name", type text}
+				            }
+				        )
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

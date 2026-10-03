@@ -1,0 +1,244 @@
+table tbl_roles
+	lineageTag: 19885c51-c03c-47cf-b524-4578871c2b66
+
+	column role_id
+		dataType: int64
+		formatString: 0
+		lineageTag: c6a5ccf0-da12-40d3-8d8a-cc1e0e1c4ba6
+		summarizeBy: none
+		sourceColumn: role_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column role_title
+		dataType: string
+		lineageTag: 27cb3499-e970-41f4-90ed-5e12c1f99b97
+		summarizeBy: none
+		sourceColumn: role_title
+
+		annotation SummarizationSetBy = Automatic
+
+	column employer_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 882ad558-6b38-4124-8ae3-4f0e754a1152
+		summarizeBy: none
+		sourceColumn: employer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column role_type_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 0e1f0202-6d02-4dcc-9b3d-d09e6851970b
+		summarizeBy: none
+		sourceColumn: role_type_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column function_id
+		dataType: int64
+		formatString: 0
+		lineageTag: b4d32067-4e0f-48c9-b6d6-dca83aa6d98d
+		summarizeBy: none
+		sourceColumn: function_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column from_month_code
+		dataType: int64
+		formatString: 0
+		lineageTag: 6026c3b2-19ee-4deb-b310-dabf723e1b73
+		summarizeBy: none
+		sourceColumn: from_month_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column to_month_code
+		dataType: int64
+		formatString: 0
+		lineageTag: 1313f39d-ae57-4e35-aa9b-1cc5226eba15
+		summarizeBy: none
+		sourceColumn: to_month_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column location
+		dataType: string
+		lineageTag: b0d7fc07-023e-4ad0-89be-b67cc905dcab
+		summarizeBy: none
+		sourceColumn: location
+
+		annotation SummarizationSetBy = Automatic
+
+	column role_summary_short
+		dataType: string
+		lineageTag: b19ed8e6-77b3-47a1-bd3e-f3f124eec0c5
+		summarizeBy: none
+		sourceColumn: role_summary_short
+
+		annotation SummarizationSetBy = Automatic
+
+	column tooltip_override_text
+		dataType: string
+		lineageTag: f37552d7-75f6-4fa5-b55e-4a879e7759ca
+		summarizeBy: none
+		sourceColumn: tooltip_override_text
+
+		annotation SummarizationSetBy = Automatic
+
+	column timeline_group
+		dataType: string
+		lineageTag: 6f4ca9f4-a741-49f0-96f2-f542bffa7940
+		summarizeBy: none
+		sourceColumn: timeline_group
+
+		annotation SummarizationSetBy = Automatic
+
+	column role_identity
+		dataType: string
+		lineageTag: d066a9fb-79ce-480e-acc7-e6b1422977e6
+		summarizeBy: none
+		sourceColumn: role_identity
+
+		annotation SummarizationSetBy = Automatic
+
+	column role_period
+		dataType: string
+		lineageTag: 0c1f4b27-9a35-4e27-abf7-6ef8743f2400
+		summarizeBy: none
+		sourceColumn: role_period
+
+		annotation SummarizationSetBy = Automatic
+
+	column role_industry_name
+		dataType: string
+		lineageTag: 19c9d5d5-5ad0-4e9f-8750-b033aadbaa03
+		summarizeBy: none
+		sourceColumn: role_industry_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column role_function_name
+		dataType: string
+		lineageTag: 249e7738-3dfe-46bb-bf33-316314287d9a
+		summarizeBy: none
+		sourceColumn: role_function_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column to_month_code_clamped
+		dataType: int64
+		formatString: 0
+		lineageTag: 01222f77-cdd6-45be-8ca0-1d23544ebdaf
+		summarizeBy: none
+		sourceColumn: to_month_code_clamped
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbl_roles = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(
+				        File.Contents(#"cv_source_path"),
+				        null,
+				        true
+				    ),
+				    tbl_roles_Table = Source{[Item = "tbl_roles", Kind = "Table"]}[Data],
+				    #"Changed Type" =
+				        Table.TransformColumnTypes(
+				            tbl_roles_Table,
+				            {
+				                {"role_id", Int64.Type},
+				                {"role_title", type text},
+				                {"employer_id", Int64.Type},
+				                {"role_type_id", Int64.Type},
+				                {"function_id", Int64.Type},
+				                {"from_month_code", Int64.Type},
+				                {"to_month_code", Int64.Type},
+				                {"location", type text},
+				                {"role_summary_short", type text},
+				                {"tooltip_override_text", type text}
+				            }
+				        ),
+				
+				    #"Added timeline_group" =
+				        Table.AddColumn(
+				            #"Changed Type",
+				            "timeline_group",
+				            each Text.From(Number.IntegerDivide(Number.IntegerDivide([from_month_code], 100), 10) * 10) & "s",
+				            type text
+				        ),
+				
+				    fn_lookup = (src as table, key_col as text, key as any, value_col as text) as any =>
+				        let
+				            hit = Table.SelectRows(src, each Record.Field(_, key_col) = key)
+				        in
+				            if Table.IsEmpty(hit) then null else Record.Field(hit{0}, value_col),
+				
+				    fn_month_text = (code as nullable number) as nullable text =>
+				        if code = null then null
+				        else if code = 999912 then "present"
+				        else Date.ToText(
+				            #date(Number.IntegerDivide(code, 100), Number.Mod(code, 100), 1),
+				            [Format = "MMM yyyy", Culture = "en-GB"]
+				        ),
+				
+				    #"Added role_identity" =
+				        Table.AddColumn(
+				            #"Added timeline_group",
+				            "role_identity",
+				            each
+				                let
+				                    employer = fn_lookup(tbl_employers, "employer_id", [employer_id], "employer_name")
+				                in
+				                    if employer = null then [role_title] else employer & "  -  " & [role_title],
+				            type text
+				        ),
+				
+				    #"Added role_period" =
+				        Table.AddColumn(
+				            #"Added role_identity",
+				            "role_period",
+				            each
+				                let
+				                    period_from = fn_month_text([from_month_code]),
+				                    period_to   = fn_month_text([to_month_code])
+				                in
+				                    if period_from = null then null else period_from & " - " & period_to,
+				            type text
+				        ),
+				
+				    #"Added role_industry_name" =
+				        Table.AddColumn(
+				            #"Added role_period",
+				            "role_industry_name",
+				            each
+				                let
+				                    industry_id = fn_lookup(tbl_employers, "employer_id", [employer_id], "industry_id")
+				                in
+				                    if industry_id = null then null else fn_lookup(tbl_industries, "industry_id", industry_id, "industry_name"),
+				            type text
+				        ),
+				
+				    #"Added role_function_name" =
+				        Table.AddColumn(
+				            #"Added role_industry_name",
+				            "role_function_name",
+				            each fn_lookup(tbl_functions, "function_id", [function_id], "function_name"),
+				            type text
+				        ),
+				
+				    #"Added to_month_code_clamped" =
+				        Table.AddColumn(
+				            #"Added role_function_name",
+				            "to_month_code_clamped",
+				            each if [to_month_code] = 999912 then Number.From(latest_publish_month) else [to_month_code],
+				            Int64.Type
+				        )
+				in
+				    #"Added to_month_code_clamped"
+
+	annotation PBI_ResultType = Exception
+

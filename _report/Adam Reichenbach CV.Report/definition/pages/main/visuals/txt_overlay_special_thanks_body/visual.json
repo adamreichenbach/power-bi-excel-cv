@@ -1,0 +1,245 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "txt_overlay_special_thanks_body",
+  "position": {
+    "x": 264,
+    "y": 186,
+    "z": 20010,
+    "height": 440,
+    "width": 754,
+    "tabOrder": -1
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Thanks to ",
+                    "textStyle": {
+                      "fontSize": "16pt",
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "color": "#242424"
+                    }
+                  },
+                  {
+                    "value": "Maxim Anatsko",
+                    "textStyle": {
+                      "fontSize": "16pt",
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "color": "#0F6CBD",
+                      "textDecoration": "underline"
+                    },
+                    "url": "https://www.maxanatsko.com/"
+                  },
+                  {
+                    "value": " for letting me use ",
+                    "textStyle": {
+                      "fontSize": "16pt",
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "color": "#242424"
+                    }
+                  },
+                  {
+                    "value": "pbir.tools",
+                    "textStyle": {
+                      "fontSize": "16pt",
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "color": "#0F6CBD",
+                      "textDecoration": "underline"
+                    },
+                    "url": "https://github.com/maxanatsko/pbir.tools"
+                  },
+                  {
+                    "value": " for this project. Without it, the PoC may not have been successful in delivering a 100% agent-built product.",
+                    "textStyle": {
+                      "fontSize": "16pt",
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "color": "#242424"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": " ",
+                    "textStyle": {
+                      "fontSize": "6pt",
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "color": "#242424"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Also check out the ",
+                    "textStyle": {
+                      "fontSize": "16pt",
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "color": "#242424"
+                    }
+                  },
+                  {
+                    "value": "Power BI agentic development repo",
+                    "textStyle": {
+                      "fontSize": "16pt",
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "color": "#0F6CBD",
+                      "textDecoration": "underline"
+                    },
+                    "url": "https://github.com/data-goblin/power-bi-agentic-development"
+                  },
+                  {
+                    "value": " by ",
+                    "textStyle": {
+                      "fontSize": "16pt",
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "color": "#242424"
+                    }
+                  },
+                  {
+                    "value": "Data Goblins (Kurt Buhler)",
+                    "textStyle": {
+                      "fontSize": "16pt",
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "color": "#0F6CBD",
+                      "textDecoration": "underline"
+                    },
+                    "url": "https://data-goblins.com/"
+                  },
+                  {
+                    "value": ", which was also pivotal in this project.",
+                    "textStyle": {
+                      "fontSize": "16pt",
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "color": "#242424"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": " ",
+                    "textStyle": {
+                      "fontSize": "16pt",
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "color": "#242424"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": " ",
+                    "textStyle": {
+                      "fontSize": "16pt",
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "color": "#242424"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Thanks to my UAT testers, who have contributed with their feedback to the final design and content.",
+                    "textStyle": {
+                      "fontSize": "16pt",
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "color": "#242424"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'txt_overlay_special_thanks_body'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "parentGroupName": "grp_overlay_file",
+  "isHidden": true
+}

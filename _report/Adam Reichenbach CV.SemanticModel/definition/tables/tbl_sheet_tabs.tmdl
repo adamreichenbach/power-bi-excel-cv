@@ -1,0 +1,53 @@
+table tbl_sheet_tabs
+	lineageTag: 434a9094-aaea-4346-8d7d-7f0ec8948dab
+
+	column sheet_tab_id
+		dataType: int64
+		formatString: 0
+		lineageTag: a672f951-1301-4c4c-bcaa-337a51163638
+		summarizeBy: none
+		sourceColumn: sheet_tab_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column sheet_tab_name
+		dataType: string
+		lineageTag: 742abd76-7b15-4b05-8b8a-ff8ea710bb7d
+		summarizeBy: none
+		sourceColumn: sheet_tab_name
+		sortByColumn: sheet_tab_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column bookmark_name
+		dataType: string
+		lineageTag: 22e95a5d-31b0-4665-90a8-94810aba1bc5
+		summarizeBy: none
+		sourceColumn: bookmark_name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbl_sheet_tabs = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(
+				        File.Contents(#"cv_source_path"),
+				        null,
+				        true
+				    ),
+				    tbl_sheet_tabs_Table = Source{[Item = "tbl_sheet_tabs", Kind = "Table"]}[Data],
+				    #"Changed Type" =
+				        Table.TransformColumnTypes(
+				            tbl_sheet_tabs_Table,
+				            {
+				                {"sheet_tab_id", Int64.Type},
+				                {"sheet_tab_name", type text},
+				                {"bookmark_name", type text}
+				            }
+				        )
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

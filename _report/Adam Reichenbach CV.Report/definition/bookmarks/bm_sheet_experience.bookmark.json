@@ -1,0 +1,940 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Experience",
+  "name": "bm_sheet_experience",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "img_sheet_exec_summary_select",
+      "img_sheet_experience_select",
+      "img_sheet_projects_select",
+      "img_sheet_tech_stack_select",
+      "img_sheet_skills_select",
+      "img_sheet_education_select",
+      "img_sheet_additional_select",
+      "sli_sheet_state",
+      "img_ribbon_view_story",
+      "img_ribbon_view_story_disabled",
+      "img_ribbon_view_list",
+      "img_ribbon_view_list_disabled",
+      "img_ribbon_detail_compact",
+      "img_ribbon_detail_compact_disabled",
+      "img_ribbon_detail_standard",
+      "img_ribbon_detail_standard_disabled",
+      "img_ribbon_perspective_timeline",
+      "img_ribbon_perspective_timeline_disabled",
+      "img_ribbon_perspective_skills",
+      "img_ribbon_perspective_skills_disabled",
+      "img_ribbon_perspective_industries",
+      "img_ribbon_perspective_industries_disabled",
+      "vis_name_box",
+      "img_filter_function",
+      "btn_filter_hint_function",
+      "btn_filter_hint_industry",
+      "btn_filter_hint_skill",
+      "btn_filter_hint_tool",
+      "img_filter_industry",
+      "img_filter_skill",
+      "img_filter_tool",
+      "img_filter_function_disabled",
+      "img_filter_industry_disabled",
+      "img_filter_skill_disabled",
+      "img_filter_tool_disabled",
+      "btn_block_perspective",
+      "btn_block_view",
+      "btn_block_detail",
+      "btn_block_filters",
+      "txt_projects_title",
+      "vis_projects_count",
+      "vis_projects_matrix",
+      "img_slicer_function_disabled",
+      "img_slicer_industry_disabled",
+      "img_slicer_skill_disabled",
+      "img_slicer_tool_disabled",
+      "img_grid_header_projects",
+      "txt_exec_summary_title",
+      "txt_experience_title",
+      "txt_tech_stack_title",
+      "txt_skills_title",
+      "vis_experience_count",
+      "vis_tech_stack_count",
+      "vis_skills_count",
+      "vis_experience_matrix",
+      "vis_tech_stack_matrix",
+      "vis_skills_matrix",
+      "img_exec_portrait",
+      "vis_exec_summary_text",
+      "txt_education_title",
+      "vis_education_count",
+      "vis_education_matrix",
+      "btn_ribbon_clear_filters",
+      "img_ribbon_clear_filters_disabled",
+      "txt_additional_title",
+      "vis_additional_count",
+      "vis_additional_table",
+      "btn_block_exec_summary_text",
+      "img_grid_header_exec",
+      "img_grid_header_experience",
+      "img_grid_header_tech_stack",
+      "img_grid_header_education",
+      "img_grid_header_additional",
+      "shp_exec_highlight_cell",
+      "vis_exec_highlight_title",
+      "vis_exec_highlight_detail",
+      "vis_exec_highlight_link",
+      "btn_exec_highlight_link",
+      "shp_prj_panel_frame",
+      "vis_prj_panel_title",
+      "vis_prj_panel_period",
+      "vis_prj_panel_chips",
+      "vis_prj_panel_radar",
+      "vis_prj_panel_tools",
+      "vis_prj_panel_highlight",
+      "vis_prj_panel_footnote",
+      "vis_prj_panel_hint",
+      "btn_prj_panel_cover",
+      "shp_exp_panel_frame",
+      "vis_exp_panel_title",
+      "vis_exp_panel_period",
+      "vis_exp_panel_chips",
+      "vis_exp_panel_radar",
+      "vis_exp_panel_tools",
+      "vis_exp_panel_highlight",
+      "vis_exp_panel_footnote",
+      "vis_exp_panel_hint",
+      "vis_exp_panel_override",
+      "btn_exp_panel_cover",
+      "img_grid_header_skills"
+    ],
+    "suppressActiveSection": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "main",
+    "sections": {
+      "main": {
+        "visualContainers": {
+          "img_sheet_exec_summary_select": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_sheet_experience_select": {
+            "singleVisual": {}
+          },
+          "img_sheet_projects_select": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_sheet_tech_stack_select": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_sheet_skills_select": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_sheet_education_select": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_sheet_additional_select": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "sli_sheet_state": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "e3638f937181ca52e436",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "tbl_sheet_tabs"
+                        }
+                      },
+                      "Property": "sheet_tab_id"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "general": [
+                    {
+                      "properties": {
+                        "filter": {
+                          "filter": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "t",
+                                "Entity": "tbl_sheet_tabs",
+                                "Type": 0
+                              }
+                            ],
+                            "Where": [
+                              {
+                                "Condition": {
+                                  "In": {
+                                    "Expressions": [
+                                      {
+                                        "Column": {
+                                          "Expression": {
+                                            "SourceRef": {
+                                              "Source": "t"
+                                            }
+                                          },
+                                          "Property": "sheet_tab_id"
+                                        }
+                                      }
+                                    ],
+                                    "Values": [
+                                      [
+                                        {
+                                          "Literal": {
+                                            "Value": "2L"
+                                          }
+                                        }
+                                      ]
+                                    ]
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_ribbon_view_story": {
+            "singleVisual": {}
+          },
+          "img_ribbon_view_story_disabled": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_ribbon_view_list": {
+            "singleVisual": {}
+          },
+          "img_ribbon_view_list_disabled": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_ribbon_detail_compact": {
+            "singleVisual": {}
+          },
+          "img_ribbon_detail_compact_disabled": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_ribbon_detail_standard": {
+            "singleVisual": {}
+          },
+          "img_ribbon_detail_standard_disabled": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_ribbon_perspective_timeline": {
+            "singleVisual": {}
+          },
+          "img_ribbon_perspective_timeline_disabled": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_ribbon_perspective_skills": {
+            "singleVisual": {}
+          },
+          "img_ribbon_perspective_skills_disabled": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_ribbon_perspective_industries": {
+            "singleVisual": {}
+          },
+          "img_ribbon_perspective_industries_disabled": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "vis_name_box": {
+            "singleVisual": {}
+          },
+          "img_filter_function": {
+            "singleVisual": {}
+          },
+          "btn_filter_hint_function": {
+            "singleVisual": {}
+          },
+          "btn_filter_hint_industry": {
+            "singleVisual": {}
+          },
+          "btn_filter_hint_skill": {
+            "singleVisual": {}
+          },
+          "btn_filter_hint_tool": {
+            "singleVisual": {}
+          },
+          "img_filter_industry": {
+            "singleVisual": {}
+          },
+          "img_filter_skill": {
+            "singleVisual": {}
+          },
+          "img_filter_tool": {
+            "singleVisual": {}
+          },
+          "img_filter_function_disabled": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_filter_industry_disabled": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_filter_skill_disabled": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_filter_tool_disabled": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "btn_block_perspective": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "btn_block_view": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "btn_block_detail": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "btn_block_filters": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "txt_projects_title": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              },
+              "objects": {},
+              "visualType": "textbox"
+            }
+          },
+          "vis_projects_count": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              },
+              "objects": {},
+              "visualType": "cardVisual"
+            }
+          },
+          "vis_projects_matrix": {
+            "singleVisual": {
+              "activeProjections": {
+                "Rows": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "tbl_project_perspective_rows"
+                        }
+                      },
+                      "Property": "group_label"
+                    }
+                  },
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "tbl_project_perspective_rows"
+                        }
+                      },
+                      "Property": "project_identity"
+                    }
+                  }
+                ]
+              },
+              "display": {
+                "mode": "hidden"
+              },
+              "objects": {},
+              "visualType": "pivotTable"
+            }
+          },
+          "img_slicer_function_disabled": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_slicer_industry_disabled": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_slicer_skill_disabled": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_slicer_tool_disabled": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_grid_header_projects": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "txt_exec_summary_title": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "textbox",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "txt_experience_title": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "textbox"
+            }
+          },
+          "txt_tech_stack_title": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "textbox",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "txt_skills_title": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "textbox",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "vis_experience_count": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "cardVisual"
+            }
+          },
+          "vis_tech_stack_count": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "vis_skills_count": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "vis_experience_matrix": {
+            "singleVisual": {
+              "activeProjections": {
+                "Rows": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "tbl_role_perspective_rows"
+                        }
+                      },
+                      "Property": "group_label"
+                    }
+                  },
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "tbl_role_perspective_rows"
+                        }
+                      },
+                      "Property": "role_identity"
+                    }
+                  }
+                ]
+              },
+              "objects": {},
+              "visualType": "pivotTable"
+            }
+          },
+          "vis_tech_stack_matrix": {
+            "singleVisual": {
+              "activeProjections": {
+                "Rows": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "tbl_tools"
+                        }
+                      },
+                      "Property": "tool_row_label"
+                    }
+                  }
+                ]
+              },
+              "objects": {},
+              "visualType": "pivotTable",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "vis_skills_matrix": {
+            "singleVisual": {
+              "activeProjections": {
+                "Rows": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "tbl_skills"
+                        }
+                      },
+                      "Property": "skill_row_label"
+                    }
+                  }
+                ]
+              },
+              "objects": {},
+              "visualType": "pivotTable",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_exec_portrait": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "image",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "vis_exec_summary_text": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "pivotTable",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "txt_education_title": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "vis_education_count": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "vis_education_matrix": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "btn_ribbon_clear_filters": {
+            "singleVisual": {}
+          },
+          "img_ribbon_clear_filters_disabled": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "txt_additional_title": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "vis_additional_count": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "vis_additional_table": {
+            "singleVisual": {
+              "visualType": "tableEx",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 1,
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "tbl_additional_items"
+                        }
+                      },
+                      "Property": "item_key"
+                    }
+                  }
+                }
+              ],
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "btn_block_exec_summary_text": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_grid_header_exec": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_grid_header_experience": {
+            "singleVisual": {}
+          },
+          "img_grid_header_tech_stack": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_grid_header_education": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "img_grid_header_additional": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "shp_exec_highlight_cell": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "vis_exec_highlight_title": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "vis_exec_highlight_detail": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "vis_exec_highlight_link": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "btn_exec_highlight_link": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "shp_prj_panel_frame": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "vis_prj_panel_title": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "vis_prj_panel_period": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "vis_prj_panel_chips": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "vis_prj_panel_radar": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "pivotTable",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "vis_prj_panel_tools": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "vis_prj_panel_highlight": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "vis_prj_panel_footnote": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "vis_prj_panel_hint": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "btn_prj_panel_cover": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "actionButton",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "shp_exp_panel_frame": {
+            "singleVisual": {}
+          },
+          "vis_exp_panel_title": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "cardVisual"
+            }
+          },
+          "vis_exp_panel_period": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "cardVisual"
+            }
+          },
+          "vis_exp_panel_chips": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "cardVisual"
+            }
+          },
+          "vis_exp_panel_radar": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "pivotTable"
+            }
+          },
+          "vis_exp_panel_tools": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "cardVisual"
+            }
+          },
+          "vis_exp_panel_highlight": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "cardVisual"
+            }
+          },
+          "vis_exp_panel_footnote": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "cardVisual"
+            }
+          },
+          "vis_exp_panel_hint": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "cardVisual"
+            }
+          },
+          "vis_exp_panel_override": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "cardVisual"
+            }
+          },
+          "btn_exp_panel_cover": {
+            "singleVisual": {
+              "objects": {},
+              "visualType": "actionButton"
+            }
+          },
+          "img_grid_header_skills": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

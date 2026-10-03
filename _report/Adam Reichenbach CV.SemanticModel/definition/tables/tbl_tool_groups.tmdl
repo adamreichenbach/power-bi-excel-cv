@@ -1,0 +1,43 @@
+table tbl_tool_groups
+	lineageTag: ea43a6d3-1231-4de8-8099-04b502df408b
+
+	column tool_group_id
+		dataType: int64
+		formatString: 0
+		lineageTag: b001071f-30bb-4a03-bc91-dfeefd2f1ae3
+		summarizeBy: none
+		sourceColumn: tool_group_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column tool_group_name
+		dataType: string
+		lineageTag: 3a7d67f6-a8f2-4fbf-a5ba-5d3cea95e3ef
+		summarizeBy: none
+		sourceColumn: tool_group_name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbl_tool_groups = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(
+				        File.Contents(#"cv_source_path"),
+				        null,
+				        true
+				    ),
+				    tbl_tool_groups_Table = Source{[Item = "tbl_tool_groups", Kind = "Table"]}[Data],
+				    #"Changed Type" =
+				        Table.TransformColumnTypes(
+				            tbl_tool_groups_Table,
+				            {
+				                {"tool_group_id", Int64.Type},
+				                {"tool_group_name", type text}
+				            }
+				        )
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

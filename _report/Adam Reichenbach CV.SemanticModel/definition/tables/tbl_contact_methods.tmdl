@@ -1,0 +1,91 @@
+table tbl_contact_methods
+	lineageTag: 5f2a7c31-6b48-4e19-9d02-7a3c5e81f4b6
+
+	column contact_method_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 8c14d9a0-2f7b-4d63-a51e-0b96c7e3d248
+		summarizeBy: none
+		sourceColumn: contact_method_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column profile_id
+		dataType: int64
+		formatString: 0
+		lineageTag: b7e35f82-1a4c-4907-8de6-3c50a9b1746d
+		summarizeBy: none
+		sourceColumn: profile_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column method_type
+		dataType: string
+		lineageTag: 2d90a4e7-58c3-4b16-bf74-6e18d2530c9a
+		summarizeBy: none
+		sourceColumn: method_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column method_label
+		dataType: string
+		lineageTag: a41c6b03-9e57-42df-8146-5b7ce902af31
+		summarizeBy: none
+		sourceColumn: method_label
+		sortByColumn: display_order
+
+		annotation SummarizationSetBy = Automatic
+
+	column method_value
+		dataType: string
+		lineageTag: 6e8b2170-c34a-4f95-b028-91d7a5e46c83
+		summarizeBy: none
+		sourceColumn: method_value
+
+		annotation SummarizationSetBy = Automatic
+
+	column display_order
+		dataType: int64
+		formatString: 0
+		lineageTag: f39d508c-71b6-4a2e-9c53-08e4b6172dfa
+		summarizeBy: none
+		sourceColumn: display_order
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_primary
+		dataType: boolean
+		lineageTag: 0ba97e46-3d21-48c7-95bf-e267c14d80a5
+		summarizeBy: none
+		sourceColumn: is_primary
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbl_contact_methods = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(
+				        File.Contents(#"cv_source_path"),
+				        null,
+				        true
+				    ),
+				    tbl_contact_methods_Table = Source{[Item = "tbl_contact_methods", Kind = "Table"]}[Data],
+				    #"Changed Type" =
+				        Table.TransformColumnTypes(
+				            tbl_contact_methods_Table,
+				            {
+				                {"contact_method_id", Int64.Type},
+				                {"profile_id", Int64.Type},
+				                {"method_type", type text},
+				                {"method_label", type text},
+				                {"method_value", type text},
+				                {"display_order", Int64.Type},
+				                {"is_primary", type logical}
+				            }
+				        )
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

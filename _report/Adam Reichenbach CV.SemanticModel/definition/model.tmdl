@@ -1,0 +1,48 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-GB
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_ProTooling = ["DevMode"]
+
+annotation PBI_QueryOrder = ["dim_calendar","tbl_additional","tbl_detail_levels","tbl_education","tbl_employers","tbl_exec_summary_content","tbl_functions","tbl_industries","tbl_perspectives","tbl_profile","tbl_project_content","tbl_project_skill","tbl_project_tool","tbl_projects","tbl_role_content","tbl_role_skill","tbl_role_tool","tbl_role_types","tbl_roles","tbl_sheet_tabs","tbl_skills","tbl_tool_content","tbl_tool_groups","tbl_tools","tbl_view_modes","cv_source_path","tbl_project_perspective_rows","tbl_contact_methods","latest_publish_month","tbl_role_perspective_rows","tbl_education_content","tbl_additional_items"]
+
+ref table dim_calendar
+ref table tbl_detail_levels
+ref table tbl_perspectives
+ref table tbl_profile
+ref table tbl_view_modes
+ref table _measures
+ref table tbl_sheet_tabs
+ref table tbl_additional
+ref table tbl_education
+ref table tbl_employers
+ref table tbl_exec_summary_content
+ref table tbl_functions
+ref table tbl_industries
+ref table tbl_project_content
+ref table tbl_project_skill
+ref table tbl_project_tool
+ref table tbl_projects
+ref table tbl_role_content
+ref table tbl_role_skill
+ref table tbl_role_tool
+ref table tbl_role_types
+ref table tbl_roles
+ref table tbl_skills
+ref table tbl_tool_content
+ref table tbl_tool_groups
+ref table tbl_tools
+ref table tbl_project_perspective_rows
+ref table tbl_contact_methods
+ref table tbl_role_perspective_rows
+ref table tbl_education_content
+ref table tbl_additional_items
+
+ref cultureInfo en-US
+

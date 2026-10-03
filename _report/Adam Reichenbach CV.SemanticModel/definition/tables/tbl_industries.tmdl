@@ -1,0 +1,52 @@
+table tbl_industries
+	lineageTag: 4821fc3b-551b-4c75-8948-95321028aa40
+
+	column industry_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 093e349f-8e5d-4c2b-885e-34633c237881
+		summarizeBy: none
+		sourceColumn: industry_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column industry_name
+		dataType: string
+		lineageTag: e9d483a7-0642-4244-a04c-3d93a66311ff
+		summarizeBy: none
+		sourceColumn: industry_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column industry_group
+		dataType: string
+		lineageTag: 96bda9a8-d4dc-4e9b-81cd-85818e782496
+		summarizeBy: none
+		sourceColumn: industry_group
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbl_industries = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(
+				        File.Contents(#"cv_source_path"),
+				        null,
+				        true
+				    ),
+				    tbl_industries_Table = Source{[Item = "tbl_industries", Kind = "Table"]}[Data],
+				    #"Changed Type" =
+				        Table.TransformColumnTypes(
+				            tbl_industries_Table,
+				            {
+				                {"industry_id", Int64.Type},
+				                {"industry_name", type text},
+				                {"industry_group", type text}
+				            }
+				        )
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

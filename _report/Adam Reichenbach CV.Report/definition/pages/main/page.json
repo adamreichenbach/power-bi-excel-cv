@@ -1,0 +1,977 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "main",
+  "displayName": "Adam Reichenbach CV",
+  "displayOption": "FitToPage",
+  "height": 1020,
+  "width": 2072,
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "image": {
+            "image": {
+              "name": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'background.png'"
+                  }
+                }
+              },
+              "url": {
+                "expr": {
+                  "ResourcePackageItem": {
+                    "PackageName": "RegisteredResources",
+                    "PackageType": 1,
+                    "ItemName": "background.png"
+                  }
+                }
+              },
+              "scaling": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Fit'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "vis_projects_matrix",
+      "target": "shp_dialog_window",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "shp_exec_highlight_cell",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "sli_filter_function",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "sli_filter_industry",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "sli_filter_skill",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "sli_filter_tool",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "sli_ribbon_detail",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "sli_ribbon_perspective",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "sli_ribbon_view",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "sli_sheet_state",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "txt_title_main",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "txt_title_overlay",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "vis_additional_count",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "vis_additional_table",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "vis_education_count",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "vis_education_matrix",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "vis_exec_highlight_detail",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "vis_exec_highlight_link",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "vis_exec_highlight_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "vis_exec_summary_text",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "vis_experience_count",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "vis_experience_matrix",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "vis_overlay_about_last_updated",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "vis_overlay_contact_identity",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "vis_overlay_contact_methods",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "vis_overlay_contact_subtitle",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "vis_projects_count",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "vis_skills_count",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "vis_skills_matrix",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "vis_status_bar",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "vis_tech_stack_count",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "vis_tech_stack_matrix",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "shp_dialog_window",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "shp_exec_highlight_cell",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "shp_prj_panel_frame",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "sli_filter_function",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "sli_filter_industry",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "sli_filter_skill",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "sli_filter_tool",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "sli_ribbon_detail",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "sli_ribbon_perspective",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "sli_ribbon_view",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "sli_sheet_state",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "txt_title_main",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "txt_title_overlay",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "vis_additional_count",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "vis_additional_table",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "vis_education_count",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "vis_education_matrix",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "vis_exec_highlight_detail",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "vis_exec_highlight_link",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "vis_exec_highlight_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "vis_exec_summary_text",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "vis_experience_count",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "vis_overlay_about_last_updated",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "vis_overlay_contact_identity",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "vis_overlay_contact_methods",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "vis_overlay_contact_subtitle",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "vis_prj_panel_chips",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "vis_prj_panel_footnote",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "vis_prj_panel_highlight",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "vis_prj_panel_hint",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "vis_prj_panel_period",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "vis_prj_panel_radar",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "vis_prj_panel_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "vis_prj_panel_tools",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "vis_projects_count",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "vis_projects_matrix",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "vis_skills_count",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "vis_skills_matrix",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "vis_status_bar",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "vis_tech_stack_count",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_experience_matrix",
+      "target": "vis_tech_stack_matrix",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "shp_dialog_window",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "shp_exec_highlight_cell",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "shp_prj_panel_frame",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "sli_filter_function",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "sli_filter_industry",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "sli_filter_skill",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "sli_filter_tool",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "sli_ribbon_detail",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "sli_ribbon_perspective",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "sli_ribbon_view",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "sli_sheet_state",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "txt_title_main",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "txt_title_overlay",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_additional_count",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_additional_table",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_education_count",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_education_matrix",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_exec_highlight_detail",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_exec_highlight_link",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_exec_highlight_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_exec_summary_text",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_experience_count",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_experience_matrix",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_overlay_about_last_updated",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_overlay_contact_identity",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_overlay_contact_methods",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_overlay_contact_subtitle",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_prj_panel_chips",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_prj_panel_footnote",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_prj_panel_highlight",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_prj_panel_hint",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_prj_panel_period",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_prj_panel_radar",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_prj_panel_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_prj_panel_tools",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_projects_count",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_projects_matrix",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_skills_count",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_skills_matrix",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_status_bar",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_tech_stack_count",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "shp_dialog_window",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "shp_exec_highlight_cell",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "shp_prj_panel_frame",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "sli_filter_function",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "sli_filter_industry",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "sli_filter_skill",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "sli_filter_tool",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "sli_ribbon_detail",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "sli_ribbon_perspective",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "sli_ribbon_view",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "sli_sheet_state",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "txt_title_main",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "txt_title_overlay",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_additional_count",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_additional_table",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_education_count",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_education_matrix",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_exec_highlight_detail",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_exec_highlight_link",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_exec_highlight_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_exec_summary_text",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_experience_count",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_experience_matrix",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_overlay_about_last_updated",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_overlay_contact_identity",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_overlay_contact_methods",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_overlay_contact_subtitle",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_prj_panel_chips",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_prj_panel_footnote",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_prj_panel_highlight",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_prj_panel_hint",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_prj_panel_period",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_prj_panel_radar",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_prj_panel_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_prj_panel_tools",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_projects_count",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_projects_matrix",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_skills_count",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_status_bar",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_tech_stack_count",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_tech_stack_matrix",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "shp_exp_panel_frame",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "vis_exp_panel_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "vis_exp_panel_period",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "vis_exp_panel_chips",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "vis_exp_panel_radar",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "vis_exp_panel_tools",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "vis_exp_panel_highlight",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "vis_exp_panel_footnote",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "vis_exp_panel_hint",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_projects_matrix",
+      "target": "vis_exp_panel_override",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "shp_exp_panel_frame",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_exp_panel_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_exp_panel_period",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_exp_panel_chips",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_exp_panel_radar",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_exp_panel_tools",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_exp_panel_highlight",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_exp_panel_footnote",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_exp_panel_hint",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_tech_stack_matrix",
+      "target": "vis_exp_panel_override",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "shp_exp_panel_frame",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_exp_panel_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_exp_panel_period",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_exp_panel_chips",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_exp_panel_radar",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_exp_panel_tools",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_exp_panel_highlight",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_exp_panel_footnote",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_exp_panel_hint",
+      "type": "NoFilter"
+    },
+    {
+      "source": "vis_skills_matrix",
+      "target": "vis_exp_panel_override",
+      "type": "NoFilter"
+    }
+  ]
+}

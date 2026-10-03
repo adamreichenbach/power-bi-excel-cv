@@ -1,0 +1,96 @@
+relationship c81dbc87-7a60-4cff-8cec-08a3a6370341
+	fromColumn: tbl_roles.employer_id
+	toColumn: tbl_employers.employer_id
+
+relationship 1d85ca00-8a1d-4ef4-8b6a-cabeb94b9f8f
+	fromColumn: tbl_roles.role_type_id
+	toColumn: tbl_role_types.role_type_id
+
+relationship b5ab2989-bd4d-4705-9e03-2506756f5b45
+	fromColumn: tbl_roles.function_id
+	toColumn: tbl_functions.function_id
+
+relationship 861f0f7c-fdce-491a-8443-304b82480c31
+	fromColumn: tbl_projects.function_id
+	toColumn: tbl_functions.function_id
+
+relationship 04fab139-4e65-4925-86b1-9d5149ac0d44
+	fromColumn: tbl_employers.industry_id
+	toColumn: tbl_industries.industry_id
+
+relationship d1ce3829-16dd-4d51-b019-ab4d7bcdb61b
+	fromColumn: tbl_projects.industry_id
+	toColumn: tbl_industries.industry_id
+
+relationship 594b5c02-d6de-4952-b609-292704261593
+	fromColumn: tbl_role_content.role_id
+	toColumn: tbl_roles.role_id
+
+relationship 79a04a54-877b-42d0-aedb-d2de7f9ae89b
+	fromColumn: tbl_project_content.project_id
+	toColumn: tbl_projects.project_id
+
+relationship b8ab3ba9-7882-4081-a6e5-4c6d0c00a46e
+	fromColumn: tbl_tool_content.tool_id
+	toColumn: tbl_tools.tool_id
+
+relationship 1d531704-9528-4d86-9a4d-a191c5c0da29
+	fromColumn: tbl_role_skill.role_id
+	toColumn: tbl_roles.role_id
+
+relationship 90627d4d-f75b-4045-a9fa-9234b2800f4e
+	fromColumn: tbl_role_skill.skill_id
+	toColumn: tbl_skills.skill_id
+
+relationship 79b38357-1775-47cf-a414-0ee100b453b6
+	fromColumn: tbl_project_skill.project_id
+	toColumn: tbl_projects.project_id
+
+relationship e253069a-e90b-4c19-ac75-d8695829b388
+	fromColumn: tbl_project_skill.skill_id
+	toColumn: tbl_skills.skill_id
+
+relationship 9dcd8d17-77d3-46ce-bb18-b8008e88d121
+	fromColumn: tbl_role_tool.role_id
+	toColumn: tbl_roles.role_id
+
+relationship 2b6a9084-d4cf-4f26-8bb7-25201354f911
+	fromColumn: tbl_role_tool.tool_id
+	toColumn: tbl_tools.tool_id
+
+relationship a9f271e9-6b6b-43d1-b7f7-ba6ee3a14cd1
+	fromColumn: tbl_project_tool.project_id
+	toColumn: tbl_projects.project_id
+
+relationship 38326560-a636-44cb-8338-095578f27ae6
+	fromColumn: tbl_project_tool.tool_id
+	toColumn: tbl_tools.tool_id
+
+relationship 31a64d75-b182-47fb-9c59-1273f2a005dc
+	fromColumn: tbl_tools.tool_group_id
+	toColumn: tbl_tool_groups.tool_group_id
+
+relationship b9658da3-875d-4559-bf30-82f30cd4cfba
+	fromColumn: tbl_project_perspective_rows.perspective_id
+	toColumn: tbl_perspectives.perspective_id
+
+relationship 8eca6149-d820-4c98-bd69-4ee9c5fcacd9
+	fromColumn: tbl_project_perspective_rows.project_id
+	toColumn: tbl_projects.project_id
+
+relationship c5847ab9-0e6d-41f3-8b72-9a3fd15e6027
+	fromColumn: tbl_contact_methods.profile_id
+	toColumn: tbl_profile.profile_id
+
+relationship 98abbe99-7cc6-420d-9eee-b12fcbb38bd3
+	fromColumn: tbl_role_perspective_rows.perspective_id
+	toColumn: tbl_perspectives.perspective_id
+
+relationship 43f28043-8e1d-4abe-8908-0560aeac69d4
+	fromColumn: tbl_role_perspective_rows.role_id
+	toColumn: tbl_roles.role_id
+
+relationship a28d79f4-4c91-42c1-98fb-8274ef8cbc14
+	fromColumn: tbl_education_content.education_id
+	toColumn: tbl_education.education_id
+

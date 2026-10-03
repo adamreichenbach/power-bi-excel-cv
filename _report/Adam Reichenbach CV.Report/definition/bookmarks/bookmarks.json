@@ -1,0 +1,47 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmarksMetadata/1.0.0/schema.json",
+  "items": [
+    {
+      "name": "bm_sheet_exec_summary"
+    },
+    {
+      "name": "bm_sheet_experience"
+    },
+    {
+      "name": "bm_sheet_projects"
+    },
+    {
+      "name": "bm_sheet_tech_stack"
+    },
+    {
+      "name": "bm_sheet_skills"
+    },
+    {
+      "name": "bm_sheet_education"
+    },
+    {
+      "name": "bm_sheet_additional"
+    },
+    {
+      "name": "bm_clear_filters"
+    },
+    {
+      "name": "bm_overlay_about"
+    },
+    {
+      "name": "bm_overlay_contact"
+    },
+    {
+      "name": "bm_overlay_help"
+    },
+    {
+      "name": "bm_overlay_special_thanks"
+    },
+    {
+      "name": "bm_overlay_close"
+    },
+    {
+      "name": "bm_dialog_dismiss"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+table tbl_project_content
+	lineageTag: b726e156-74eb-41f9-aa4c-d243a40e2374
+
+	column project_content_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 20af9b9c-596d-471c-bd31-cd060fbd22ee
+		summarizeBy: none
+		sourceColumn: project_content_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column project_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 190ff5c0-c970-4c2c-a38b-ab1c10f0a680
+		summarizeBy: none
+		sourceColumn: project_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column view
+		dataType: string
+		lineageTag: db827fd0-6937-4244-ac01-e16a183a5f46
+		summarizeBy: none
+		sourceColumn: view
+
+		annotation SummarizationSetBy = Automatic
+
+	column detail_level
+		dataType: string
+		lineageTag: cfaaa1fc-5b7b-4a72-9951-7cbf9d51d175
+		summarizeBy: none
+		sourceColumn: detail_level
+
+		annotation SummarizationSetBy = Automatic
+
+	column text
+		dataType: string
+		lineageTag: ddb6b06c-a6e3-4376-8b55-df89a85cec6f
+		summarizeBy: none
+		sourceColumn: text
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbl_project_content = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(
+				        File.Contents(#"cv_source_path"),
+				        null,
+				        true
+				    ),
+				    tbl_project_content_Table = Source{[Item = "tbl_project_content", Kind = "Table"]}[Data],
+				    #"Changed Type" =
+				        Table.TransformColumnTypes(
+				            tbl_project_content_Table,
+				            {
+				                {"project_content_id", Int64.Type},
+				                {"project_id", Int64.Type},
+				                {"view", type text},
+				                {"detail_level", type text},
+				                {"text", type text}
+				            }
+				        )
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

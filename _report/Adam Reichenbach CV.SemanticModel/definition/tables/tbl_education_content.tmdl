@@ -1,0 +1,62 @@
+table tbl_education_content
+	lineageTag: c18f3c4b-7cda-4fe7-8a75-c92c9ce80c52
+
+	column education_content_id
+		dataType: int64
+		formatString: 0
+		lineageTag: aad643b2-523a-458a-944e-82a3209da069
+		summarizeBy: none
+		sourceColumn: education_content_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column education_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 7b3fd201-07f4-4ef0-989b-5878d301c7f5
+		summarizeBy: none
+		sourceColumn: education_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column view
+		dataType: string
+		lineageTag: 6e3ea0e1-7aca-4db9-99b5-db226c666b15
+		summarizeBy: none
+		sourceColumn: view
+
+		annotation SummarizationSetBy = Automatic
+
+	column text
+		dataType: string
+		lineageTag: a7a18420-d31b-4e2c-87f4-646b87a814ac
+		summarizeBy: none
+		sourceColumn: text
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbl_education_content = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(
+				        File.Contents(#"cv_source_path"),
+				        null,
+				        true
+				    ),
+				    tbl_education_content_Table = Source{[Item = "tbl_education_content", Kind = "Table"]}[Data],
+				    #"Changed Type" =
+				        Table.TransformColumnTypes(
+				            tbl_education_content_Table,
+				            {
+				                {"education_content_id", Int64.Type},
+				                {"education_id", Int64.Type},
+				                {"view", type text},
+				                {"text", type text}
+				            }
+				        )
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

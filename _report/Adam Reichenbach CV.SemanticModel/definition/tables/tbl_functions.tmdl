@@ -1,0 +1,43 @@
+table tbl_functions
+	lineageTag: 45d39693-5b79-47aa-838b-cb3fb5eb3fa8
+
+	column function_id
+		dataType: int64
+		formatString: 0
+		lineageTag: c70e9b36-5357-4c19-9771-4519c5e7840f
+		summarizeBy: none
+		sourceColumn: function_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column function_name
+		dataType: string
+		lineageTag: 912e309f-a172-4282-a1c4-b93d5942eb95
+		summarizeBy: none
+		sourceColumn: function_name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbl_functions = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(
+				        File.Contents(#"cv_source_path"),
+				        null,
+				        true
+				    ),
+				    tbl_functions_Table = Source{[Item = "tbl_functions", Kind = "Table"]}[Data],
+				    #"Changed Type" =
+				        Table.TransformColumnTypes(
+				            tbl_functions_Table,
+				            {
+				                {"function_id", Int64.Type},
+				                {"function_name", type text}
+				            }
+				        )
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

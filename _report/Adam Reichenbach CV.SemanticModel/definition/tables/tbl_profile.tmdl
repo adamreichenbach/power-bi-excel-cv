@@ -1,0 +1,78 @@
+table tbl_profile
+	lineageTag: 24be6512-8c98-4983-974e-8152e369f099
+
+	column profile_id
+		dataType: int64
+		formatString: 0
+		lineageTag: d050a5e7-0c3c-4c0a-afd0-5ea9a86f174b
+		summarizeBy: none
+		sourceColumn: profile_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column full_name
+		dataType: string
+		lineageTag: eb9af7d1-8e1d-4a77-836c-d594a138e648
+		summarizeBy: none
+		sourceColumn: full_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column professional_title
+		dataType: string
+		lineageTag: 6cb84448-e9f7-4de3-b5bc-5473183a8ef4
+		summarizeBy: none
+		sourceColumn: professional_title
+
+		annotation SummarizationSetBy = Automatic
+
+	column location
+		dataType: string
+		lineageTag: 003e8b6b-9e3b-426b-85fe-b4e4f9b1c50e
+		summarizeBy: none
+		sourceColumn: location
+
+		annotation SummarizationSetBy = Automatic
+
+	column latest_publish_month
+		dataType: int64
+		formatString: 0
+		lineageTag: 251a6f15-9687-4d6a-afb6-f8c72ae5fad2
+		summarizeBy: none
+		sourceColumn: latest_publish_month
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbl_profile = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(
+				        File.Contents(#"cv_source_path"),
+				        null,
+				        true
+				    ),
+				    tbl_profile_Table = Source{[Item = "tbl_profile", Kind = "Table"]}[Data],
+				    #"Changed Type" =
+				        Table.TransformColumnTypes(
+				            tbl_profile_Table,
+				            {
+				                {"profile_id", Int64.Type},
+				                {"full_name", type text},
+				                {"professional_title", type text},
+				                {"location", type text}
+				            }
+				        ),
+				
+				    #"Added latest_publish_month" =
+				        Table.AddColumn(
+				            #"Changed Type",
+				            "latest_publish_month",
+				            each Number.From(latest_publish_month),
+				            Int64.Type
+				        )
+				in
+				    #"Added latest_publish_month"
+
+	annotation PBI_ResultType = Table
+

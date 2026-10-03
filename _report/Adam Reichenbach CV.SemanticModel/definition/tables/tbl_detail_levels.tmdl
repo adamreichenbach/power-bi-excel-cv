@@ -1,0 +1,44 @@
+table tbl_detail_levels
+	lineageTag: 5e1e46c5-e800-42da-86f6-da0d02ec1b42
+
+	column detail_mode_id
+		dataType: int64
+		formatString: 0
+		lineageTag: a19a3773-4de2-43d2-a0a4-0933af2e8286
+		summarizeBy: none
+		sourceColumn: detail_mode_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column mode
+		dataType: string
+		lineageTag: 2249fcac-eb4c-44a2-994d-f6bd69f28e22
+		summarizeBy: none
+		sourceColumn: mode
+		sortByColumn: detail_mode_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbl_detail_levels = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(
+				        File.Contents(#"cv_source_path"),
+				        null,
+				        true
+				    ),
+				    tbl_detail_levels_Table = Source{[Item = "tbl_detail_levels", Kind = "Table"]}[Data],
+				    #"Changed Type" =
+				        Table.TransformColumnTypes(
+				            tbl_detail_levels_Table,
+				            {
+				                {"detail_mode_id", Int64.Type},
+				                {"mode", type text}
+				            }
+				        )
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

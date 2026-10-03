@@ -1,0 +1,10 @@
+expression cv_source_path = "C:\Users\reserve\Desktop\Excel_CV\Project\_input\CV.xlsx" meta [IsParameterQuery = true, IsParameterQueryRequired = true, Type = "Text"]
+	lineageTag: d88a956d-846f-4967-a483-576b11fbf047
+
+	annotation PBI_ResultType = Text
+
+expression latest_publish_month = "202609" meta [IsParameterQuery = true, IsParameterQueryRequired = true, Type = "Text"]
+	lineageTag: 59f874ac-20b7-4677-a2ca-a32153abe8c1
+
+	annotation PBI_ResultType = Text
+

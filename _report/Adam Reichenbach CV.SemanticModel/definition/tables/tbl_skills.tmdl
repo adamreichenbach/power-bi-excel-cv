@@ -1,0 +1,99 @@
+table tbl_skills
+	lineageTag: 02475a74-3b82-467b-9a19-95d9643e01d1
+
+	column skill_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 5c506f5b-30fb-4115-9c5c-5986bb1656ad
+		summarizeBy: none
+		sourceColumn: skill_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column skill_group
+		dataType: string
+		lineageTag: 11ca2df6-298a-4894-8ec1-5be9959b5ce2
+		summarizeBy: none
+		sourceColumn: skill_group
+
+		annotation SummarizationSetBy = Automatic
+
+	column skill_name
+		dataType: string
+		lineageTag: ab645474-94c2-455c-a8b0-d1d475470c37
+		summarizeBy: none
+		sourceColumn: skill_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column overall_proficiency_level
+		dataType: int64
+		formatString: 0
+		lineageTag: 7e10a3fd-e81d-4ad2-b1fa-1ab801bd0301
+		summarizeBy: none
+		sourceColumn: overall_proficiency_level
+
+		annotation SummarizationSetBy = Automatic
+
+	column skill_sort_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 1ab84d2f-f71e-44c9-b3ed-40efbcdd8c2e
+		summarizeBy: none
+		sourceColumn: skill_sort_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column skill_row_label
+		dataType: string
+		lineageTag: 2030d327-97a6-41b8-a882-2e801e3eb0ab
+		summarizeBy: none
+		sourceColumn: skill_row_label
+		sortByColumn: skill_sort_key
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbl_skills = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(
+				        File.Contents(#"cv_source_path"),
+				        null,
+				        true
+				    ),
+				    tbl_skills_Table = Source{[Item = "tbl_skills", Kind = "Table"]}[Data],
+				    #"Changed Type" =
+				        Table.TransformColumnTypes(
+				            tbl_skills_Table,
+				            {
+				                {"skill_id", Int64.Type},
+				                {"skill_group", type text},
+				                {"skill_name", type text},
+				                {"overall_proficiency_level", Int64.Type}
+				            }
+				        ),
+				
+				    #"Added skill_sort_key" =
+				        Table.AddColumn(
+				            #"Changed Type",
+				            "skill_sort_key",
+				            each
+				                (if [skill_group] = "Technical" then 1 else if [skill_group] = "Soft" then 2 else 3) * 10000
+				                + (7 - (if [overall_proficiency_level] = null then 0 else [overall_proficiency_level])) * 1000
+				                + [skill_id],
+				            Int64.Type
+				        ),
+				
+				    #"Added skill_row_label" =
+				        Table.AddColumn(
+				            #"Added skill_sort_key",
+				            "skill_row_label",
+				            each [skill_name],
+				            type text
+				        )
+				in
+				    #"Added skill_row_label"
+
+	annotation PBI_ResultType = Exception
+

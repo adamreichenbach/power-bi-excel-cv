@@ -1,0 +1,244 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "txt_overlay_about_body",
+  "position": {
+    "x": 264,
+    "y": 186,
+    "z": 20010,
+    "height": 580,
+    "width": 754,
+    "tabOrder": -1
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "This is a curriculum vitae built as a Power BI report that behaves like an Excel workbook. It began as a PoC (proof of concept) — inspired by ",
+                    "textStyle": {
+                      "fontSize": "14pt",
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "color": "#242424"
+                    }
+                  },
+                  {
+                    "value": "this",
+                    "textStyle": {
+                      "fontSize": "14pt",
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "color": "#0F6CBD",
+                      "textDecoration": "underline"
+                    },
+                    "url": "https://community.fabric.microsoft.com/blog/community_blog/dataviz-contest-for-pros--fabric-data-days/4863849"
+                  },
+                  {
+                    "value": " Fabric challenge — and turned into a way of showing how I work rather than only listing what I have done.",
+                    "textStyle": {
+                      "fontSize": "14pt",
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "color": "#242424"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": " ",
+                    "textStyle": {
+                      "fontSize": "6pt",
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "color": "#242424"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Everything on screen is a real Power BI artefact: a semantic model over a structured source workbook, DAX measures driving the formula bar and the sheet content, and bookmarks handling every navigation step. The Excel look is deliberate, because the ribbon, the formula bar and the sheet tabs are the interface most finance and analytics people already live in, so the CV explains itself without a legend.",
+                    "textStyle": {
+                      "fontSize": "14pt",
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "color": "#242424"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": " ",
+                    "textStyle": {
+                      "fontSize": "6pt",
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "color": "#242424"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "The build was also an experiment in agentic development: the model, the Power Query and every visual were authored as files on disk by an AI agent, with no manual editing in Power BI Desktop or the Power Query editor at any point. That constraint made a few things slower and made everything else more disciplined. If something here looks like a decision rather than a default, it probably was one.",
+                    "textStyle": {
+                      "fontSize": "14pt",
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "color": "#242424"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": " ",
+                    "textStyle": {
+                      "fontSize": "6pt",
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "color": "#242424"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "You can download this whole project from my first public repo ",
+                    "textStyle": {
+                      "fontSize": "14pt",
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "color": "#242424"
+                    }
+                  },
+                  {
+                    "value": "here",
+                    "textStyle": {
+                      "fontSize": "14pt",
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "color": "#0F6CBD",
+                      "textDecoration": "underline"
+                    },
+                    "url": "https://github.com/adamreichenbach/power-bi-excel-cv"
+                  },
+                  {
+                    "value": ".",
+                    "textStyle": {
+                      "fontSize": "14pt",
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "color": "#242424"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": " ",
+                    "textStyle": {
+                      "fontSize": "6pt",
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "color": "#242424"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "New here? Help in the menu on the left shows how to get around the sheet tabs, the ribbon and the filters. Open the CV under Recent below to get started. The File menu or the Help button on the ribbon bring you back here any time.",
+                    "textStyle": {
+                      "fontSize": "14pt",
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "color": "#242424"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'txt_overlay_about_body'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "parentGroupName": "grp_overlay_file"
+}

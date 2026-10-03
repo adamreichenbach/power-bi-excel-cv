@@ -1,0 +1,1219 @@
+table _measures
+	isHidden
+	lineageTag: c0f3c4fb-17f2-448c-8955-8de0c9bcec11
+
+	measure is_view_story_selected =
+			IF(
+			    SELECTEDVALUE( tbl_view_modes[mode], "Story" ) = "Story",
+			    1,
+			    0
+			)
+		formatString: 0
+		lineageTag: 0f877b27-7549-41f9-b0ec-940176a8aa01
+
+	measure dbg_selected_view_mode = SELECTEDVALUE( tbl_view_modes[mode], "(none)" )
+		lineageTag: a9df775b-cab6-4b45-89ac-be21e2e4ab82
+
+	measure fbar_sheet_code =
+			SWITCH(
+			    SELECTEDVALUE( tbl_sheet_tabs[sheet_tab_id], 1 ),
+			    1, "EXEC",
+			    2, "EXP",
+			    3, "PRJ",
+			    4, "TECH",
+			    7, "SKL",
+			    5, "EDU",
+			    6, "ADD",
+			    "?"
+			)
+		lineageTag: e211916a-3f39-4c48-8eb0-bc81c911bc98
+
+	measure fbar_cell_ref =
+			VAR _sheet = SELECTEDVALUE( tbl_sheet_tabs[sheet_tab_id], 1 )
+			VAR _default =
+			    SWITCH( _sheet, 1, "A1", 2, "B4", 3, "C4", 4, "C2", 5, "D1", 6, "E1", 7, "B2", "?" )
+			VAR _item = NOT ISBLANK( [fbar_selected_name] )
+			VAR _pg = SELECTEDVALUE( tbl_project_perspective_rows[group_label] )
+			VAR _pk = SELECTEDVALUE( tbl_project_perspective_rows[project_sort_key] )
+			VAR _prows =
+			    CALCULATETABLE(
+			        FILTER(
+			            SUMMARIZE( tbl_project_perspective_rows, tbl_project_perspective_rows[group_label], tbl_project_perspective_rows[project_sort_key] ),
+			            NOT ISBLANK( [prj_key_facts] )
+			        ),
+			        REMOVEFILTERS( tbl_project_perspective_rows[group_label], tbl_project_perspective_rows[project_identity], tbl_project_perspective_rows[project_sort_key] )
+			    )
+			VAR _prj_item_row =
+			    COUNTROWS(
+			        FILTER(
+			            _prows,
+			            tbl_project_perspective_rows[group_label] < _pg
+			                || ( tbl_project_perspective_rows[group_label] = _pg && tbl_project_perspective_rows[project_sort_key] < _pk )
+			        )
+			    ) + 2
+			VAR _prj_group_row = COUNTROWS( FILTER( _prows, tbl_project_perspective_rows[group_label] < _pg ) ) + 2
+			VAR _prj_group =
+			    _sheet = 3
+			        && NOT ISFILTERED( tbl_project_perspective_rows[project_identity] )
+			        && ISFILTERED( tbl_project_perspective_rows[group_label] )
+			        && HASONEVALUE( tbl_project_perspective_rows[group_label] )
+			VAR _rg = SELECTEDVALUE( tbl_role_perspective_rows[group_label] )
+			VAR _rf = SELECTEDVALUE( tbl_role_perspective_rows[role_from_month_code] )
+			VAR _ri = SELECTEDVALUE( tbl_role_perspective_rows[role_id] )
+			VAR _rrows =
+			    CALCULATETABLE(
+			        FILTER(
+			            SUMMARIZE( tbl_role_perspective_rows, tbl_role_perspective_rows[group_label], tbl_role_perspective_rows[role_from_month_code], tbl_role_perspective_rows[role_id] ),
+			            NOT ISBLANK( [exp_key_facts] )
+			        ),
+			        REMOVEFILTERS( tbl_role_perspective_rows[group_label], tbl_role_perspective_rows[role_identity], tbl_role_perspective_rows[role_from_month_code], tbl_role_perspective_rows[role_id] )
+			    )
+			VAR _role_item_row =
+			    COUNTROWS(
+			        FILTER(
+			            _rrows,
+			            tbl_role_perspective_rows[group_label] < _rg
+			                || (
+			                    tbl_role_perspective_rows[group_label] = _rg
+			                        && (
+			                            tbl_role_perspective_rows[role_from_month_code] < _rf
+			                                || ( tbl_role_perspective_rows[role_from_month_code] = _rf && tbl_role_perspective_rows[role_id] < _ri )
+			                        )
+			                )
+			        )
+			    ) + 2
+			VAR _role_group_row = COUNTROWS( FILTER( _rrows, tbl_role_perspective_rows[group_label] < _rg ) ) + 2
+			VAR _role_group =
+			    _sheet = 2
+			        && NOT ISFILTERED( tbl_role_perspective_rows[role_identity] )
+			        && ISFILTERED( tbl_role_perspective_rows[group_label] )
+			        && HASONEVALUE( tbl_role_perspective_rows[group_label] )
+			VAR _tk = SELECTEDVALUE( tbl_tools[tool_sort_key] )
+			VAR _tool_row =
+			    CALCULATE(
+			        COUNTROWS( FILTER( VALUES( tbl_tools[tool_sort_key] ), tbl_tools[tool_sort_key] < _tk && [tech_in_scope] = 1 ) ),
+			        REMOVEFILTERS( tbl_tools[tool_row_label], tbl_tools[tool_sort_key] )
+			    ) + 2
+			VAR _sk = SELECTEDVALUE( tbl_skills[skill_sort_key] )
+			VAR _skill_row =
+			    CALCULATE(
+			        COUNTROWS( FILTER( VALUES( tbl_skills[skill_sort_key] ), tbl_skills[skill_sort_key] < _sk && [skills_in_scope] = 1 ) ),
+			        REMOVEFILTERS( tbl_skills[skill_row_label], tbl_skills[skill_sort_key] )
+			    ) + 2
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        _sheet = 3 && _item, "B" & _prj_item_row,
+			        _prj_group, "A" & _prj_group_row,
+			        _sheet = 2 && _item, "B" & _role_item_row,
+			        _role_group, "A" & _role_group_row,
+			        _sheet = 4 && _item, "A" & _tool_row,
+			        _sheet = 7 && _item, "A" & _skill_row,
+			        _default
+			    )
+		lineageTag: dd887a4a-87d3-45c0-acc8-e081b0017c6b
+
+	measure fbar_name_box = [fbar_cell_ref]
+		lineageTag: 09df27f8-c5a2-4c01-abdd-2b17b4a8d711
+
+	measure fbar_formula =
+			VAR _sheet  = SELECTEDVALUE( tbl_sheet_tabs[sheet_tab_id], 1 )
+			VAR _view   = SELECTEDVALUE( tbl_view_modes[mode], "Story" )
+			VAR _detail = SELECTEDVALUE( tbl_detail_levels[mode], "Standard" )
+			VAR _col    = _view & " " & _detail
+			VAR _group  =
+			    SWITCH(
+			        SELECTEDVALUE( tbl_perspectives[perspective_name], "Timeline" ),
+			        "Skills", "Skill",
+			        "Industries", "Industry",
+			        "Period"
+			    )
+			VAR _filter = [fbar_filter_template]
+			VAR _has_filter = LEN( _filter ) > 0
+			VAR _q = """"
+			VAR _name = [fbar_selected_name]
+			VAR _lit = _q & SUBSTITUTE( _name, _q, _q & _q ) & _q
+			VAR _groupby =
+			    "=GROUPBY({T}[" & _group & "], {T}[" & _col & "], CONCAT, , 0"
+			        & IF( _has_filter, ", , " & _filter, "" )
+			        & ")"
+			RETURN
+			    SWITCH(
+			        _sheet,
+			        1, "=XLOOKUP(" & _q & _detail & _q & ", Summary[Detail], Summary[Text])",
+			        2,
+			            IF(
+			                NOT ISBLANK( _name ),
+			                "=XLOOKUP(" & _lit & ", Roles[Role], Roles[" & _col & "])",
+			                SUBSTITUTE( _groupby, "{T}", "Roles" )
+			            ),
+			        3,
+			            IF(
+			                NOT ISBLANK( _name ),
+			                "=XLOOKUP(" & _lit & ", Projects[Project], Projects[" & _col & "])",
+			                SUBSTITUTE( _groupby, "{T}", "Projects" )
+			            ),
+			        4,
+			            IF(
+			                NOT ISBLANK( _name ),
+			                "=XLOOKUP(" & _lit & ", Tools[Tool], Tools[" & _col & "])",
+			                "=SORT("
+			                    & IF(
+			                        _has_filter,
+			                        "FILTER(Tools[[Tool]:[" & _col & "]], " & SUBSTITUTE( _filter, "{T}", "Tools" ) & ")",
+			                        "Tools[[Tool]:[" & _col & "]]"
+			                    )
+			                    & ", 3, -1)"
+			            ),
+			        5, "=SORTBY(Education[[Institution]:[" & _view & "]], Education[From], -1)",
+			        6, "=SORTBY(Additional, Additional[Highlight], -1, Additional[Section Order], 1, Additional[Year], -1)",
+			        7,
+			            IF(
+			                NOT ISBLANK( _name ),
+			                "=XLOOKUP(" & _lit & ", Skills[Skill], Skills[Proficiency])",
+			                "=SORT("
+			                    & IF( _has_filter, "FILTER(Skills, " & SUBSTITUTE( _filter, "{T}", "Skills" ) & ")", "Skills" )
+			                    & ", {2,3}, {-1,-1})"
+			            )
+			    )
+		lineageTag: fe074ef2-bb50-483a-818c-c30ee058fa78
+
+	measure window_title = SELECTEDVALUE( tbl_profile[full_name] ) & " - " & SELECTEDVALUE( tbl_profile[professional_title] ) & " CV.pbix - Excel"
+		lineageTag: 2ece0f4a-daf2-4657-86c8-0e89100e87b3
+
+	measure prj_period_display =
+			VAR _from = SELECTEDVALUE( tbl_projects[from_month_code] )
+			VAR _to   = SELECTEDVALUE( tbl_projects[to_month_code] )
+			VAR _fromText =
+			    FORMAT( DATE( INT( _from / 100 ), MOD( _from, 100 ), 1 ), "MMM yyyy" )
+			VAR _toText =
+			    IF(
+			        _to = 999912,
+			        "present",
+			        FORMAT( DATE( INT( _to / 100 ), MOD( _to, 100 ), 1 ), "MMM yyyy" )
+			    )
+			RETURN
+			    IF( ISBLANK( _from ), BLANK(), _fromText & " - " & _toText )
+		lineageTag: e7cbe4be-902a-42cc-bc33-1ea3ce509757
+
+	measure prj_identity =
+			VAR _employer = CALCULATE( SELECTEDVALUE( tbl_employers[employer_name] ),
+			                           TREATAS( VALUES( tbl_projects[employer_id] ), tbl_employers[employer_id] ) )
+			VAR _name = SELECTEDVALUE( tbl_projects[project_name] )
+			RETURN
+			    IF( ISBLANK( _name ), BLANK(),
+			        IF( ISBLANK( _employer ), _name, _employer & "  -  " & _name ) )
+		lineageTag: b7d2fe6c-0ddd-49ec-b542-f18a2b224be8
+
+	measure prj_key_facts =
+			VAR _row_skill = SELECTEDVALUE( tbl_project_perspective_rows[skill_id] )
+			VAR _skill_row_dropped =
+			    NOT ISBLANK( _row_skill )
+			        && ISFILTERED( tbl_skills[skill_name] )
+			        && NOT _row_skill IN VALUES( tbl_skills[skill_id] )
+			RETURN
+			IF(
+			    _skill_row_dropped,
+			    BLANK(),
+			    CALCULATE(
+			        VAR _perspective = SELECTEDVALUE( tbl_perspectives[perspective_id] )
+			        VAR _period      = SELECTEDVALUE( tbl_project_perspective_rows[project_period] )
+			        VAR _industry    = SELECTEDVALUE( tbl_project_perspective_rows[project_industry_name] )
+			        VAR _function    = SELECTEDVALUE( tbl_project_perspective_rows[project_function_name] )
+			        VAR _industry_is_the_grouping = _perspective = 3
+			        RETURN
+			            IF(
+			                ISBLANK( _period ),
+			                BLANK(),
+			                _period
+			                    & IF(
+			                        _industry_is_the_grouping || ISBLANK( _industry ),
+			                        "",
+			                        "  ·  " & _industry
+			                      )
+			                    & IF( ISBLANK( _function ), "", "  ·  " & _function )
+			            ),
+			        CROSSFILTER( tbl_project_skill[project_id], tbl_projects[project_id], Both ),
+			        CROSSFILTER( tbl_project_tool[project_id],  tbl_projects[project_id], Both )
+			    )
+			)
+		lineageTag: 922a84ed-3d59-4b9d-bd99-ea473b1d0e6c
+
+	measure prj_body_text =
+			VAR _view   = SELECTEDVALUE( tbl_view_modes[mode], "Story" )
+			VAR _detail = SELECTEDVALUE( tbl_detail_levels[mode], "Standard" )
+			VAR _row_skill = SELECTEDVALUE( tbl_project_perspective_rows[skill_id] )
+			VAR _skill_row_dropped =
+			    NOT ISBLANK( _row_skill )
+			        && ISFILTERED( tbl_skills[skill_name] )
+			        && NOT _row_skill IN VALUES( tbl_skills[skill_id] )
+			RETURN
+			IF(
+			    _skill_row_dropped,
+			    BLANK(),
+			    CALCULATE(
+			        CALCULATE(
+			            SELECTEDVALUE( tbl_project_content[text] ),
+			            TREATAS( VALUES( tbl_project_perspective_rows[project_id] ), tbl_projects[project_id] ),
+			            tbl_project_content[view] = _view,
+			            tbl_project_content[detail_level] = _detail
+			        ),
+			        CROSSFILTER( tbl_project_skill[project_id], tbl_projects[project_id], Both ),
+			        CROSSFILTER( tbl_project_tool[project_id],  tbl_projects[project_id], Both )
+			    )
+			)
+		lineageTag: 76e59d90-49d8-4dda-8675-b1c35bc38b1b
+
+	measure prj_visible_count =
+			COALESCE(
+			    CALCULATE(
+			        DISTINCTCOUNT( tbl_project_perspective_rows[project_id] ),
+			        CROSSFILTER( tbl_project_skill[project_id], tbl_projects[project_id], Both ),
+			        CROSSFILTER( tbl_project_tool[project_id],  tbl_projects[project_id], Both )
+			    ),
+			    0
+			)
+		formatString: 0
+		lineageTag: 60ed5f5d-c586-47ad-b93b-449c0921e9f5
+
+	measure prj_total_count =
+			CALCULATE(
+			    DISTINCTCOUNT( tbl_project_perspective_rows[project_id] ),
+			    REMOVEFILTERS( tbl_project_perspective_rows ),
+			    REMOVEFILTERS( tbl_perspectives ),
+			    REMOVEFILTERS( tbl_projects ),
+			    REMOVEFILTERS( tbl_project_skill ),
+			    REMOVEFILTERS( tbl_project_tool ),
+			    REMOVEFILTERS( tbl_skills ),
+			    REMOVEFILTERS( tbl_tools ),
+			    REMOVEFILTERS( tbl_industries ),
+			    REMOVEFILTERS( tbl_functions )
+			)
+		formatString: 0
+		lineageTag: ad67acb8-1c37-48a8-98b6-b9c9eba75279
+
+	measure prj_count_label =
+			VAR _v = [prj_visible_count]
+			VAR _t = [prj_total_count]
+			VAR _p = SELECTEDVALUE( tbl_perspectives[perspective_name] )
+			RETURN
+			    _v & " of " & _t & " projects"
+			        & IF( ISBLANK( _p ), "", "  ·  grouped by " & LOWER( _p ) )
+		lineageTag: 778d0df0-f96b-48f3-bcbb-c3c6df77f09f
+
+	measure contact_identity = SELECTEDVALUE( tbl_profile[full_name] )
+		lineageTag: 832dde5a-22a1-463f-a64c-fe0afd3a6e49
+
+	measure contact_subtitle =
+			VAR _title = SELECTEDVALUE( tbl_profile[professional_title] )
+			VAR _location = SELECTEDVALUE( tbl_profile[location] )
+			RETURN
+			    IF( ISBLANK( _title ), _location, _title & "  ·  " & _location )
+		lineageTag: 6a26b132-a0b0-4cac-b9bc-8a3ed2211020
+
+	measure contact_value_display = SELECTEDVALUE( tbl_contact_methods[method_value] )
+		lineageTag: b1ca2871-3025-498a-be1b-ac0750af8b4b
+
+	measure sel_entity =
+			VAR _p = [sel_project_id]
+			VAR _r = [sel_role_id]
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        ISFILTERED( tbl_role_perspective_rows[role_identity] ), "role",
+			        ISFILTERED( tbl_project_perspective_rows[project_identity] ), "project",
+			        HASONEVALUE( tbl_project_perspective_rows[project_id] ), "project",
+			        HASONEVALUE( tbl_role_perspective_rows[role_id] ), "role",
+			        NOT ISBLANK( _r ) && ISBLANK( _p ), "role",
+			        NOT ISBLANK( _p ) && ISBLANK( _r ), "project",
+			        BLANK()
+			    )
+		lineageTag: 86354b2a-a658-4545-81ca-fec8423d9af5
+
+	measure sel_override_text =
+			VAR _r = [sel_role_id]
+			RETURN
+			    IF(
+			        [sel_entity] = "role",
+			        CALCULATE( SELECTEDVALUE( tbl_roles[tooltip_override_text] ), REMOVEFILTERS( tbl_roles ), tbl_roles[role_id] = _r )
+			    )
+		lineageTag: 2b2419e9-6dbd-4651-a516-9c26c5312432
+
+	measure sel_title =
+			VAR _p = [sel_project_id]
+			VAR _r = [sel_role_id]
+			RETURN
+			    SWITCH(
+			        [sel_entity],
+			        "project", CALCULATE( SELECTEDVALUE( tbl_projects[project_name] ), REMOVEFILTERS( tbl_projects ), tbl_projects[project_id] = _p ),
+			        "role",    CALCULATE( SELECTEDVALUE( tbl_roles[role_title] ),      REMOVEFILTERS( tbl_roles ),    tbl_roles[role_id] = _r )
+			    )
+		lineageTag: 24249df6-2c85-4ccf-9e02-ec691783fe47
+
+	measure sel_employer =
+			VAR _p = [sel_project_id]
+			VAR _r = [sel_role_id]
+			VAR _eid =
+			    SWITCH(
+			        [sel_entity],
+			        "project", CALCULATE( SELECTEDVALUE( tbl_projects[employer_id] ), REMOVEFILTERS( tbl_projects ), tbl_projects[project_id] = _p ),
+			        "role",    CALCULATE( SELECTEDVALUE( tbl_roles[employer_id] ),    REMOVEFILTERS( tbl_roles ),    tbl_roles[role_id] = _r )
+			    )
+			RETURN
+			    CALCULATE( SELECTEDVALUE( tbl_employers[employer_name] ), REMOVEFILTERS( tbl_employers ), tbl_employers[employer_id] = _eid )
+		lineageTag: 7d4c4ff4-ba60-444d-9d8c-4ee1a219d3dd
+
+	measure sel_period =
+			VAR _e = [sel_entity]
+			VAR _p = [sel_project_id]
+			VAR _r = [sel_role_id]
+			VAR _from =
+			    SWITCH(
+			        _e,
+			        "project", CALCULATE( SELECTEDVALUE( tbl_projects[from_month_code] ), REMOVEFILTERS( tbl_projects ), tbl_projects[project_id] = _p ),
+			        "role",    CALCULATE( SELECTEDVALUE( tbl_roles[from_month_code] ),    REMOVEFILTERS( tbl_roles ),    tbl_roles[role_id] = _r )
+			    )
+			VAR _to =
+			    SWITCH(
+			        _e,
+			        "project", CALCULATE( SELECTEDVALUE( tbl_projects[to_month_code] ), REMOVEFILTERS( tbl_projects ), tbl_projects[project_id] = _p ),
+			        "role",    CALCULATE( SELECTEDVALUE( tbl_roles[to_month_code] ),    REMOVEFILTERS( tbl_roles ),    tbl_roles[role_id] = _r )
+			    )
+			VAR _fromText = FORMAT( DATE( INT( _from / 100 ), MOD( _from, 100 ), 1 ), "MMM yyyy" )
+			VAR _toText =
+			    IF( _to = 999912, "present", FORMAT( DATE( INT( _to / 100 ), MOD( _to, 100 ), 1 ), "MMM yyyy" ) )
+			VAR _emp = [sel_employer]
+			RETURN
+			    IF(
+			        ISBLANK( _from ),
+			        "",
+			        IF( ISBLANK( _emp ), "", _emp & "   ·   " ) & _fromText & " – " & _toText
+			    )
+		lineageTag: 7a6a69e7-6b03-4098-a191-9877e70d1ea2
+
+	measure sel_chips =
+			VAR _e = [sel_entity]
+			VAR _p = [sel_project_id]
+			VAR _r = [sel_role_id]
+			VAR _iid =
+			    SWITCH(
+			        _e,
+			        "project",
+			            CALCULATE( SELECTEDVALUE( tbl_projects[industry_id] ), REMOVEFILTERS( tbl_projects ), tbl_projects[project_id] = _p ),
+			        "role",
+			            VAR _eid = CALCULATE( SELECTEDVALUE( tbl_roles[employer_id] ), REMOVEFILTERS( tbl_roles ), tbl_roles[role_id] = _r )
+			            RETURN CALCULATE( SELECTEDVALUE( tbl_employers[industry_id] ), REMOVEFILTERS( tbl_employers ), tbl_employers[employer_id] = _eid )
+			    )
+			VAR _industry =
+			    CALCULATE( SELECTEDVALUE( tbl_industries[industry_name] ), REMOVEFILTERS( tbl_industries ), tbl_industries[industry_id] = _iid )
+			VAR _rtid =
+			    IF(
+			        _e = "role",
+			        CALCULATE( SELECTEDVALUE( tbl_roles[role_type_id] ), REMOVEFILTERS( tbl_roles ), tbl_roles[role_id] = _r ),
+			        2
+			    )
+			VAR _type =
+			    CALCULATE( SELECTEDVALUE( tbl_role_types[role_type_name] ), REMOVEFILTERS( tbl_role_types ), tbl_role_types[role_type_id] = _rtid )
+			VAR _location =
+			    IF(
+			        _e = "role",
+			        CALCULATE( SELECTEDVALUE( tbl_roles[location] ), REMOVEFILTERS( tbl_roles ), tbl_roles[role_id] = _r )
+			    )
+			VAR _parts =
+			    IF( ISBLANK( _industry ), "", "   ·   " & _industry )
+			        & IF( ISBLANK( _type ), "", "   ·   " & _type )
+			        & IF( ISBLANK( _location ), "", "   ·   " & _location )
+			RETURN
+			    IF(
+			        NOT ISBLANK( [sel_override_text] ) || ISBLANK( _e ) || LEN( _parts ) = 0,
+			        "",
+			        MID( _parts, 8, LEN( _parts ) )
+			    )
+		lineageTag: a2fea87f-5998-4612-b567-151fad700bc8
+
+	measure sel_tools =
+			VAR _e = [sel_entity]
+			VAR _p = [sel_project_id]
+			VAR _r = [sel_role_id]
+			VAR _pt =
+			    SELECTCOLUMNS(
+			        FILTER( ALL( tbl_project_tool ), _e = "project" && tbl_project_tool[project_id] = _p ),
+			        "@tool_id", tbl_project_tool[tool_id],
+			        "@rel", tbl_project_tool[context_relevance_level]
+			    )
+			VAR _rt =
+			    SELECTCOLUMNS(
+			        FILTER( ALL( tbl_role_tool ), _e = "role" && tbl_role_tool[role_id] = _r ),
+			        "@tool_id", tbl_role_tool[tool_id],
+			        "@rel", tbl_role_tool[context_relevance_level]
+			    )
+			VAR _top = TOPN( 5, UNION( _pt, _rt ), [@rel], DESC, [@tool_id], ASC )
+			VAR _named =
+			    ADDCOLUMNS(
+			        _top,
+			        "@label",
+			            VAR _t = [@tool_id]
+			            VAR _name = CALCULATE( SELECTEDVALUE( tbl_tools[tool_display_name] ), REMOVEFILTERS( tbl_tools ), tbl_tools[tool_id] = _t )
+			            VAR _lvl = CALCULATE( SELECTEDVALUE( tbl_tools[overall_proficiency_level] ), REMOVEFILTERS( tbl_tools ), tbl_tools[tool_id] = _t )
+			            RETURN IF( ISBLANK( _lvl ), _name, _name & " [" & FORMAT( _lvl, "0" ) & "/7]" )
+			    )
+			RETURN
+			    IF(
+			        NOT ISBLANK( [sel_override_text] ),
+			        "",
+			        CONCATENATEX( _named, [@label], "   •   ", [@rel], DESC, [@tool_id], ASC ) & ""
+			    )
+		lineageTag: fee83f9e-4565-4cb4-855a-75f23aa989e8
+
+	measure sel_highlight =
+			VAR _p = [sel_project_id]
+			VAR _r = [sel_role_id]
+			VAR _text =
+			    SWITCH(
+			        [sel_entity],
+			        "project", CALCULATE( SELECTEDVALUE( tbl_projects[project_summary_short] ), REMOVEFILTERS( tbl_projects ), tbl_projects[project_id] = _p ),
+			        "role",    CALCULATE( SELECTEDVALUE( tbl_roles[role_summary_short] ),      REMOVEFILTERS( tbl_roles ),    tbl_roles[role_id] = _r )
+			    )
+			RETURN IF( NOT ISBLANK( [sel_override_text] ), "", _text & "" )
+		lineageTag: 1b42f4cd-da9d-4002-8cb5-fe9ca65c92b6
+
+	measure sel_radar_svg =
+			VAR _e = [sel_entity]
+			VAR _p = [sel_project_id]
+			VAR _r = [sel_role_id]
+			VAR _override = [sel_override_text]
+			VAR _ps =
+			    SELECTCOLUMNS(
+			        FILTER( ALL( tbl_project_skill ), _e = "project" && tbl_project_skill[project_id] = _p ),
+			        "@skill_id", tbl_project_skill[skill_id],
+			        "@rel", tbl_project_skill[context_relevance_level]
+			    )
+			VAR _rs =
+			    SELECTCOLUMNS(
+			        FILTER( ALL( tbl_role_skill ), _e = "role" && tbl_role_skill[role_id] = _r ),
+			        "@skill_id", tbl_role_skill[skill_id],
+			        "@rel", tbl_role_skill[context_relevance_level]
+			    )
+			VAR _meta =
+			    ADDCOLUMNS(
+			        FILTER( UNION( _ps, _rs ), NOT ISBLANK( [@rel] ) ),
+			        "@group",
+			            VAR _s = [@skill_id]
+			            RETURN CALCULATE( SELECTEDVALUE( tbl_skills[skill_group] ), REMOVEFILTERS( tbl_skills ), tbl_skills[skill_id] = _s ),
+			        "@name",
+			            VAR _s = [@skill_id]
+			            RETURN CALCULATE( SELECTEDVALUE( tbl_skills[skill_name] ), REMOVEFILTERS( tbl_skills ), tbl_skills[skill_id] = _s )
+			    )
+			VAR _tech = TOPN( 4, FILTER( _meta, [@group] = "Technical" ), [@rel], DESC, [@skill_id], ASC )
+			VAR _soft = TOPN( 4, FILTER( _meta, [@group] = "Soft" ), [@rel], DESC, [@skill_id], ASC )
+			VAR _keyed =
+			    ADDCOLUMNS(
+			        UNION( _tech, _soft ),
+			        "@key", IF( [@group] = "Technical", 0, 1 ) * 100000
+			                + ( 7 - [@rel] ) * 1000
+			                + [@skill_id]
+			    )
+			VAR _n = COUNTROWS( _keyed )
+			VAR _cx = 260
+			VAR _cy = 196
+			VAR _r0 = 105
+			VAR _geo =
+			    ADDCOLUMNS(
+			        _keyed,
+			        "@i",
+			            VAR _k = [@key]
+			            RETURN COALESCE( COUNTROWS( FILTER( _keyed, [@key] < _k ) ), 0 )
+			    )
+			VAR _ang = ADDCOLUMNS( _geo, "@a", -PI() / 2 + [@i] * 2 * PI() / _n )
+			VAR _pts =
+			    ADDCOLUMNS(
+			        _ang,
+			        "@x",  _cx + _r0 * ( [@rel] - 1 ) / 6 * COS( [@a] ),
+			        "@y",  _cy + _r0 * ( [@rel] - 1 ) / 6 * SIN( [@a] ),
+			        "@sx", _cx + _r0 * COS( [@a] ),
+			        "@sy", _cy + _r0 * SIN( [@a] ),
+			        "@lx", _cx + ( _r0 + 17 ) * COS( [@a] ),
+			        "@ly", _cy + ( _r0 + 17 ) * SIN( [@a] )
+			    )
+			VAR _ticks = SELECTCOLUMNS( GENERATESERIES( 2, 7, 1 ), "@t", [Value] )
+			VAR _rings =
+			    CONCATENATEX(
+			        _ticks,
+			        VAR _rr = _r0 * ( [@t] - 1 ) / 6
+			        VAR _rp =
+			            CONCATENATEX(
+			                _pts,
+			                FORMAT( ROUND( _cx + _rr * COS( [@a] ), 0 ), "0" ) & ","
+			                    & FORMAT( ROUND( _cy + _rr * SIN( [@a] ), 0 ), "0" ),
+			                " ", [@i], ASC
+			            )
+			        RETURN
+			            "<polygon points=""" & _rp & """ fill=""none"" stroke="""
+			                & IF( [@t] = 7, "rgb(200,200,200)", "rgb(224,224,224)" )
+			                & """ stroke-width=""1""/>",
+			        ""
+			    )
+			VAR _spokes =
+			    CONCATENATEX(
+			        _pts,
+			        "<line x1=""" & FORMAT( _cx, "0" ) & """ y1=""" & FORMAT( _cy, "0" )
+			            & """ x2=""" & FORMAT( ROUND( [@sx], 0 ), "0" )
+			            & """ y2=""" & FORMAT( ROUND( [@sy], 0 ), "0" )
+			            & """ stroke=""rgb(224,224,224)"" stroke-width=""1""/>",
+			        ""
+			    )
+			VAR _poly =
+			    CONCATENATEX(
+			        _pts,
+			        FORMAT( ROUND( [@x], 0 ), "0" ) & "," & FORMAT( ROUND( [@y], 0 ), "0" ),
+			        " ", [@i], ASC
+			    )
+			VAR _dots =
+			    CONCATENATEX(
+			        _pts,
+			        "<circle cx=""" & FORMAT( ROUND( [@x], 0 ), "0" )
+			            & """ cy=""" & FORMAT( ROUND( [@y], 0 ), "0" )
+			            & """ r=""3"" fill=""rgb(16,124,65)""/>",
+			        ""
+			    )
+			VAR _labels =
+			    CONCATENATEX(
+			        _pts,
+			        VAR _raw = [@name]
+			        VAR _len = LEN( _raw )
+			        VAR _spaces = FILTER( GENERATESERIES( 1, _len, 1 ), MID( _raw, [Value], 1 ) = " " )
+			        VAR _split =
+			            IF(
+			                _len <= 20 || ISEMPTY( _spaces ),
+			                0,
+			                MINX( TOPN( 1, _spaces, ABS( [Value] - _len / 2 ), ASC ), [Value] )
+			            )
+			        VAR _lx = ROUND( [@lx], 0 )
+			        VAR _ly = ROUND( [@ly], 0 )
+			        VAR _anchor =
+			            IF( ABS( _lx - _cx ) > 4, IF( _lx > _cx, "start", "end" ), "middle" )
+			        VAR _dy = IF( ABS( _ly - _cy ) > _r0, IF( _ly > _cy, 10, -3 ), 4 )
+			        VAR _y0 = ROUND( _ly + _dy, 0 ) - IF( _split > 0, 5, 0 )
+			        VAR _l1 = IF( _split = 0, _raw, TRIM( LEFT( _raw, _split - 1 ) ) )
+			        VAR _l2 = IF( _split = 0, "", TRIM( MID( _raw, _split + 1, _len ) ) )
+			        VAR _body =
+			            IF(
+			                _split = 0,
+			                SUBSTITUTE( SUBSTITUTE( _l1, "&", "&amp;" ), "<", "&lt;" ),
+			                "<tspan x=""" & FORMAT( _lx, "0" ) & """ dy=""0"">"
+			                    & SUBSTITUTE( SUBSTITUTE( _l1, "&", "&amp;" ), "<", "&lt;" ) & "</tspan>"
+			                    & "<tspan x=""" & FORMAT( _lx, "0" ) & """ dy=""11"">"
+			                    & SUBSTITUTE( SUBSTITUTE( _l2, "&", "&amp;" ), "<", "&lt;" ) & "</tspan>"
+			            )
+			        RETURN
+			            "<text x=""" & FORMAT( _lx, "0" ) & """ y=""" & FORMAT( _y0, "0" )
+			                & """ text-anchor=""" & _anchor
+			                & """ font-family=""Segoe UI, Arial, sans-serif"" font-size=""10"""
+			                & " fill=""rgb(66,66,66)"">" & _body & "</text>",
+			        ""
+			    )
+			VAR _empty =
+			    "data:image/svg+xml;utf8,<svg xmlns=""http://www.w3.org/2000/svg"" "
+			        & "viewBox=""0 0 4 4"" width=""4"" height=""4""></svg>"
+			RETURN
+			    IF(
+			        NOT ISBLANK( _override ) || ISBLANK( _n ) || _n < 3,
+			        _empty,
+			        "data:image/svg+xml;utf8,<svg xmlns=""http://www.w3.org/2000/svg"" "
+			            & "viewBox=""21 45 478 304"" width=""478"" height=""304"">"
+			            & _rings & _spokes
+			            & "<polygon points=""" & _poly & """ fill=""rgb(16,124,65)"" "
+			            & "fill-opacity=""0.14"" stroke=""rgb(16,124,65)"" stroke-width=""1.75"" "
+			            & "stroke-linejoin=""round""/>"
+			            & _dots & _labels
+			            & "</svg>"
+			    )
+		lineageTag: ed1aa6bd-29f0-491c-8f31-5238dd36374e
+		dataCategory: ImageUrl
+
+	measure sel_project_id =
+			VAR _u = SELECTEDVALUE( tbl_project_perspective_rows[project_id] )
+			RETURN IF( ISBLANK( _u ), SELECTEDVALUE( tbl_projects[project_id] ), _u )
+		lineageTag: 533e1b1f-ac99-4cf5-b962-2d57d0d44c85
+
+	measure sel_role_id =
+			VAR _u = SELECTEDVALUE( tbl_role_perspective_rows[role_id] )
+			RETURN IF( ISBLANK( _u ), SELECTEDVALUE( tbl_roles[role_id] ), _u )
+		lineageTag: 1bbf70ba-8473-43a6-b242-da0a469b4412
+
+	measure sel_footnote =
+			IF(
+			    ISBLANK( [sel_entity] ) || NOT ISBLANK( [sel_override_text] ),
+			    "",
+			    "Radar: how central each skill was to this work (1-7): relevance. A tool's bracketed figure is my current proficiency [n/7]."
+			)
+		lineageTag: 98cfca08-2a33-49ab-b7ca-c7d2601e4f13
+
+	measure exp_key_facts =
+			VAR _row_skill = SELECTEDVALUE( tbl_role_perspective_rows[skill_id] )
+			VAR _skill_row_dropped =
+			    NOT ISBLANK( _row_skill )
+			        && ISFILTERED( tbl_skills[skill_name] )
+			        && NOT _row_skill IN VALUES( tbl_skills[skill_id] )
+			RETURN
+			IF(
+			    _skill_row_dropped,
+			    BLANK(),
+			    CALCULATE(
+			        VAR _perspective = SELECTEDVALUE( tbl_perspectives[perspective_id] )
+			        VAR _period      = SELECTEDVALUE( tbl_role_perspective_rows[role_period] )
+			        VAR _industry    = SELECTEDVALUE( tbl_role_perspective_rows[role_industry_name] )
+			        VAR _function    = SELECTEDVALUE( tbl_role_perspective_rows[role_function_name] )
+			        VAR _industry_is_the_grouping = _perspective = 3
+			        RETURN
+			            IF(
+			                ISBLANK( _period ),
+			                BLANK(),
+			                _period
+			                    & IF(
+			                        _industry_is_the_grouping || ISBLANK( _industry ),
+			                        "",
+			                        "  ·  " & _industry
+			                      )
+			                    & IF( ISBLANK( _function ), "", "  ·  " & _function )
+			            ),
+			        CROSSFILTER( tbl_role_skill[role_id], tbl_roles[role_id], Both ),
+			        CROSSFILTER( tbl_role_tool[role_id],  tbl_roles[role_id], Both )
+			    )
+			)
+		lineageTag: f1c0564b-e80f-4734-9405-0fd9c4a4cfa9
+
+	measure exp_body_text =
+			VAR _view   = SELECTEDVALUE( tbl_view_modes[mode], "Story" )
+			VAR _detail = SELECTEDVALUE( tbl_detail_levels[mode], "Standard" )
+			VAR _row_skill = SELECTEDVALUE( tbl_role_perspective_rows[skill_id] )
+			VAR _skill_row_dropped =
+			    NOT ISBLANK( _row_skill )
+			        && ISFILTERED( tbl_skills[skill_name] )
+			        && NOT _row_skill IN VALUES( tbl_skills[skill_id] )
+			RETURN
+			IF(
+			    _skill_row_dropped,
+			    BLANK(),
+			    CALCULATE(
+			        CALCULATE(
+			            SELECTEDVALUE( tbl_role_content[text] ),
+			            TREATAS( VALUES( tbl_role_perspective_rows[role_id] ), tbl_roles[role_id] ),
+			            tbl_role_content[view] = _view,
+			            tbl_role_content[detail_level] = _detail
+			        ),
+			        CROSSFILTER( tbl_role_skill[role_id], tbl_roles[role_id], Both ),
+			        CROSSFILTER( tbl_role_tool[role_id],  tbl_roles[role_id], Both )
+			    )
+			)
+		lineageTag: de80f918-86ba-4641-96a5-22b6071bc96f
+
+	measure exp_visible_count =
+			COALESCE(
+			    CALCULATE(
+			        DISTINCTCOUNT( tbl_role_perspective_rows[role_id] ),
+			        CROSSFILTER( tbl_role_skill[role_id], tbl_roles[role_id], Both ),
+			        CROSSFILTER( tbl_role_tool[role_id],  tbl_roles[role_id], Both )
+			    ),
+			    0
+			)
+		formatString: 0
+		lineageTag: d35895aa-180e-4d47-80a2-9cd876cd4d4e
+
+	measure exp_total_count =
+			CALCULATE(
+			    DISTINCTCOUNT( tbl_role_perspective_rows[role_id] ),
+			    REMOVEFILTERS( tbl_role_perspective_rows ),
+			    REMOVEFILTERS( tbl_perspectives ),
+			    REMOVEFILTERS( tbl_roles ),
+			    REMOVEFILTERS( tbl_role_skill ),
+			    REMOVEFILTERS( tbl_role_tool ),
+			    REMOVEFILTERS( tbl_skills ),
+			    REMOVEFILTERS( tbl_tools ),
+			    REMOVEFILTERS( tbl_employers ),
+			    REMOVEFILTERS( tbl_industries ),
+			    REMOVEFILTERS( tbl_functions )
+			)
+		formatString: 0
+		lineageTag: b59e3eb0-b5b6-4db0-941f-e4ba7d6da18c
+
+	measure exp_count_label =
+			VAR _v = [exp_visible_count]
+			VAR _t = [exp_total_count]
+			VAR _p = SELECTEDVALUE( tbl_perspectives[perspective_name] )
+			RETURN
+			    _v & " of " & _t & " roles"
+			        & IF( ISBLANK( _p ), "", "  ·  grouped by " & LOWER( _p ) )
+		lineageTag: 6fefff43-414f-46d3-ae5d-e94f695b7acc
+
+	measure exec_body_text =
+			VAR _detail = SELECTEDVALUE( tbl_detail_levels[mode], "Standard" )
+			RETURN
+			    CALCULATE(
+			        SELECTEDVALUE( tbl_exec_summary_content[text] ),
+			        tbl_exec_summary_content[detail_level] = _detail
+			    )
+		lineageTag: 170123c5-8661-47a5-8529-e408071c0c3b
+
+	measure tech_in_scope =
+			VAR _roles =
+			    CALCULATE(
+			        COUNTROWS( tbl_role_tool ),
+			        CROSSFILTER( tbl_role_skill[role_id], tbl_roles[role_id], Both )
+			    )
+			VAR _projects =
+			    CALCULATE(
+			        COUNTROWS( tbl_project_tool ),
+			        CROSSFILTER( tbl_project_skill[project_id], tbl_projects[project_id], Both )
+			    )
+			RETURN
+			    IF( _roles + _projects > 0, 1 )
+		formatString: 0
+		lineageTag: 94579539-44f8-4781-a5ea-debac276caaf
+
+	measure tech_group =
+			IF(
+			    [tech_in_scope] = 1,
+			    CALCULATE(
+			        SELECTEDVALUE( tbl_tool_groups[tool_group_name] ),
+			        TREATAS( VALUES( tbl_tools[tool_group_id] ), tbl_tool_groups[tool_group_id] )
+			    )
+			)
+		lineageTag: 77267c42-b0f4-49af-b4b6-846c7e8fc6d6
+
+	measure tech_proficiency =
+			VAR _level = SELECTEDVALUE( tbl_tools[overall_proficiency_level] )
+			RETURN
+			    IF(
+			        [tech_in_scope] = 1 && NOT ISBLANK( _level ),
+			        FORMAT( _level, "0" ) & "/7"
+			    )
+		lineageTag: aae9dd49-3159-4186-9f89-99c76a16cca9
+
+	measure tech_usage =
+			VAR _tool = SELECTEDVALUE( tbl_tools[tool_id] )
+			VAR _role_ids =
+			    DISTINCT( SELECTCOLUMNS( FILTER( ALL( tbl_role_tool ), tbl_role_tool[tool_id] = _tool ), "@id", tbl_role_tool[role_id] ) )
+			VAR _project_ids =
+			    DISTINCT( SELECTCOLUMNS( FILTER( ALL( tbl_project_tool ), tbl_project_tool[tool_id] = _tool ), "@id", tbl_project_tool[project_id] ) )
+			VAR _periods =
+			    UNION(
+			        SELECTCOLUMNS(
+			            FILTER( ALL( tbl_roles ), tbl_roles[role_id] IN _role_ids ),
+			            "@from", tbl_roles[from_month_code],
+			            "@to", tbl_roles[to_month_code_clamped]
+			        ),
+			        SELECTCOLUMNS(
+			            FILTER( ALL( tbl_projects ), tbl_projects[project_id] IN _project_ids ),
+			            "@from", tbl_projects[from_month_code],
+			            "@to", tbl_projects[to_month_code_clamped]
+			        )
+			    )
+			VAR _months =
+			    COUNTROWS(
+			        FILTER(
+			            ALL( dim_calendar[year_month] ),
+			            VAR _m = dim_calendar[year_month]
+			            RETURN NOT ISEMPTY( FILTER( _periods, [@from] <= _m && [@to] >= _m ) )
+			        )
+			    )
+			VAR _years = QUOTIENT( _months, 12 )
+			VAR _rest = MOD( _months, 12 )
+			VAR _duration =
+			    IF( _years > 0, _years & IF( _years = 1, " year", " years" ), "" )
+			        & IF( _years > 0 && _rest > 0, " ", "" )
+			        & IF( _rest > 0, _rest & IF( _rest = 1, " month", " months" ), "" )
+			VAR _role_n = COUNTROWS( _role_ids )
+			VAR _project_n = COUNTROWS( _project_ids )
+			VAR _roles = IF( _role_n > 0, _role_n & IF( _role_n = 1, " role", " roles" ) )
+			VAR _projects = IF( _project_n > 0, _project_n & IF( _project_n = 1, " project", " projects" ) )
+			VAR _a = IF( LEN( _duration ) = 0, _roles, IF( ISBLANK( _roles ), _duration, _duration & "  ·  " & _roles ) )
+			VAR _b = IF( LEN( _a ) = 0, _projects, IF( ISBLANK( _projects ), _a, _a & "  ·  " & _projects ) )
+			RETURN
+			    IF( [tech_in_scope] = 1 && LEN( _b ) > 0, _b )
+		lineageTag: 6aacad04-493c-4b87-8467-b19dda112da4
+
+	measure tech_body_text =
+			VAR _view   = SELECTEDVALUE( tbl_view_modes[mode], "Story" )
+			VAR _detail = SELECTEDVALUE( tbl_detail_levels[mode], "Standard" )
+			RETURN
+			    IF(
+			        [tech_in_scope] = 1,
+			        CALCULATE(
+			            SELECTEDVALUE( tbl_tool_content[text] ),
+			            tbl_tool_content[view] = _view,
+			            tbl_tool_content[detail_level] = _detail
+			        )
+			    )
+		lineageTag: f0e7c94c-71f6-43ad-88e4-3b1334db3cc3
+
+	measure tech_visible_count =
+			COALESCE(
+			    COUNTROWS( FILTER( VALUES( tbl_tools[tool_id] ), [tech_in_scope] = 1 ) ),
+			    0
+			)
+		formatString: 0
+		lineageTag: 2fdcfbb0-39ea-4fe5-9245-2757c37d5eba
+
+	measure tech_total_count = COUNTROWS( ALL( tbl_tools ) )
+		formatString: 0
+		lineageTag: f7f3dd1f-e050-4566-a7ce-8469fa473692
+
+	measure tech_count_label = [tech_visible_count] & " of " & [tech_total_count] & " tools"
+		lineageTag: 42851242-6007-4715-8ca8-0c73ec5af455
+
+	measure edu_key_facts =
+			VAR _period   = SELECTEDVALUE( tbl_education[education_period] )
+			VAR _location = SELECTEDVALUE( tbl_education[location] )
+			RETURN
+			    IF(
+			        ISBLANK( _period ), _location,
+			        IF( ISBLANK( _location ), _period, _period & "   ·   " & _location )
+			    )
+		lineageTag: 8c4be0d1-5f3a-4a7e-9b21-6d0e8f4a7c33
+
+	measure edu_body_text =
+			VAR _view = SELECTEDVALUE( tbl_view_modes[mode], "Story" )
+			RETURN
+			    CALCULATE(
+			        SELECTEDVALUE( tbl_education_content[text] ),
+			        tbl_education_content[view] = _view
+			    )
+		lineageTag: f1893f72-02eb-49b5-b3ec-60b4452698df
+
+	measure edu_count_label =
+			VAR _n = COUNTROWS( tbl_education )
+			RETURN _n & IF( _n = 1, " entry", " entries" )
+		lineageTag: 3fe7270a-5abe-49fb-8357-6f5e20911ec0
+
+	measure sel_override_display = [sel_override_text] & ""
+		lineageTag: 2889d966-15cb-484c-a2d1-0a50b57d5701
+
+	measure add_count_label =
+			VAR _items    = COUNTROWS( tbl_additional_items )
+			VAR _sections = DISTINCTCOUNT( tbl_additional_items[section] )
+			RETURN
+			    _items & IF( _items = 1, " item", " items" )
+			        & "   ·   "
+			        & _sections & IF( _sections = 1, " section", " sections" )
+		lineageTag: 17d2620a-63ea-44c1-babc-b2c6494e780f
+
+	measure add_row_back_color =
+			IF(
+			    SELECTEDVALUE( tbl_additional_items[is_highlight] ) = TRUE(),
+			    "#D3EBDD"
+			)
+		lineageTag: 288e0f08-066c-4d2d-9389-fe7fbc3092ba
+
+	measure about_last_updated =
+			VAR _month_code = MAX( tbl_profile[latest_publish_month] )
+			RETURN
+			    IF(
+			        NOT ISBLANK( _month_code ),
+			        FORMAT( DATE( QUOTIENT( _month_code, 100 ), MOD( _month_code, 100 ), 1 ), "MMM yyyy" )
+			    )
+		lineageTag: c0714238-0377-44bc-be17-bd4de9efc780
+
+	measure skills_in_scope =
+			VAR _roles =
+			    CALCULATE(
+			        COUNTROWS( tbl_role_skill ),
+			        CROSSFILTER( tbl_role_tool[role_id], tbl_roles[role_id], Both )
+			    )
+			VAR _projects =
+			    CALCULATE(
+			        COUNTROWS( tbl_project_skill ),
+			        CROSSFILTER( tbl_project_tool[project_id], tbl_projects[project_id], Both )
+			    )
+			RETURN
+			    IF( _roles + _projects > 0, 1 )
+		formatString: 0
+		lineageTag: a7557409-5240-4427-93e0-5fe21a118043
+
+	measure skills_proficiency =
+			VAR _level = SELECTEDVALUE( tbl_skills[overall_proficiency_level] )
+			RETURN
+			    IF(
+			        [skills_in_scope] = 1 && NOT ISBLANK( _level ),
+			        FORMAT( _level, "0" ) & "/7"
+			    )
+		lineageTag: 87b06803-1289-4d13-94ff-b0e43a2c7be7
+
+	measure skills_usage =
+			VAR _skill = SELECTEDVALUE( tbl_skills[skill_id] )
+			VAR _role_ids =
+			    DISTINCT( SELECTCOLUMNS( FILTER( ALL( tbl_role_skill ), tbl_role_skill[skill_id] = _skill ), "@id", tbl_role_skill[role_id] ) )
+			VAR _project_ids =
+			    DISTINCT( SELECTCOLUMNS( FILTER( ALL( tbl_project_skill ), tbl_project_skill[skill_id] = _skill ), "@id", tbl_project_skill[project_id] ) )
+			VAR _periods =
+			    UNION(
+			        SELECTCOLUMNS(
+			            FILTER( ALL( tbl_roles ), tbl_roles[role_id] IN _role_ids ),
+			            "@from", tbl_roles[from_month_code],
+			            "@to", tbl_roles[to_month_code_clamped]
+			        ),
+			        SELECTCOLUMNS(
+			            FILTER( ALL( tbl_projects ), tbl_projects[project_id] IN _project_ids ),
+			            "@from", tbl_projects[from_month_code],
+			            "@to", tbl_projects[to_month_code_clamped]
+			        )
+			    )
+			VAR _months =
+			    COUNTROWS(
+			        FILTER(
+			            ALL( dim_calendar[year_month] ),
+			            VAR _m = dim_calendar[year_month]
+			            RETURN NOT ISEMPTY( FILTER( _periods, [@from] <= _m && [@to] >= _m ) )
+			        )
+			    )
+			VAR _years = QUOTIENT( _months, 12 )
+			VAR _rest = MOD( _months, 12 )
+			VAR _duration =
+			    IF( _years > 0, _years & IF( _years = 1, " year", " years" ), "" )
+			        & IF( _years > 0 && _rest > 0, " ", "" )
+			        & IF( _rest > 0, _rest & IF( _rest = 1, " month", " months" ), "" )
+			VAR _role_n = COUNTROWS( _role_ids )
+			VAR _project_n = COUNTROWS( _project_ids )
+			VAR _roles = IF( _role_n > 0, _role_n & IF( _role_n = 1, " role", " roles" ) )
+			VAR _projects = IF( _project_n > 0, _project_n & IF( _project_n = 1, " project", " projects" ) )
+			VAR _a = IF( LEN( _duration ) = 0, _roles, IF( ISBLANK( _roles ), _duration, _duration & "  ·  " & _roles ) )
+			VAR _b = IF( LEN( _a ) = 0, _projects, IF( ISBLANK( _projects ), _a, _a & "  ·  " & _projects ) )
+			RETURN
+			    IF( [skills_in_scope] = 1 && LEN( _b ) > 0, _b )
+		lineageTag: 1bf4f081-1e73-43ff-8ba2-b59592d8cea4
+
+	measure skills_visible_count =
+			COALESCE(
+			    COUNTROWS( FILTER( VALUES( tbl_skills[skill_id] ), [skills_in_scope] = 1 ) ),
+			    0
+			)
+		formatString: 0
+		lineageTag: 6d1b4a69-5c6e-4d2b-a013-31055a4b9995
+
+	measure skills_total_count = COUNTROWS( ALL( tbl_skills ) )
+		formatString: 0
+		lineageTag: de3fd157-ea34-4af6-bc77-8e5db77883cf
+
+	measure skills_type = IF( [skills_in_scope] = 1, SELECTEDVALUE( tbl_skills[skill_group] ) )
+		lineageTag: 183d97ed-173c-4398-a411-fdd1924fc75f
+
+	measure skills_count_label = [skills_visible_count] & " of " & [skills_total_count] & " skills"
+		lineageTag: 7a8c2fe2-ebb0-4f54-bd9b-8d1ad1e518e7
+
+	measure fbar_filter_template =
+			VAR _f = IF( ISFILTERED( tbl_functions[function_name] ), "COUNTIF(FunctionPick,{T}[Function])" )
+			VAR _i = IF( ISFILTERED( tbl_industries[industry_group] ), "COUNTIF(IndustryPick,{T}[Industry])" )
+			VAR _s = IF( ISFILTERED( tbl_skills[skill_name] ), "COUNTIF(SkillPick,{T}[Skill])" )
+			VAR _t = IF( ISFILTERED( tbl_tools[tool_display_name] ), "COUNTIF(ToolPick,{T}[Tool])" )
+			RETURN
+			    CONCATENATEX(
+			        FILTER( { ( 1, _f ), ( 2, _i ), ( 3, _s ), ( 4, _t ) }, NOT ISBLANK( [Value2] ) ),
+			        [Value2],
+			        " * ",
+			        [Value1], ASC
+			    )
+		lineageTag: afd8305d-61a4-489d-a51f-32c0ab6f9b94
+
+	measure fbar_selected_name =
+			VAR _sheet = SELECTEDVALUE( tbl_sheet_tabs[sheet_tab_id], 1 )
+			RETURN
+			    SWITCH(
+			        _sheet,
+			        2,
+			            IF(
+			                ISFILTERED( tbl_role_perspective_rows[role_identity] )
+			                    && HASONEVALUE( tbl_role_perspective_rows[role_id] )
+			                    && NOT ISBLANK( [exp_key_facts] ),
+			                LOOKUPVALUE( tbl_roles[role_title], tbl_roles[role_id], SELECTEDVALUE( tbl_role_perspective_rows[role_id] ) )
+			            ),
+			        3,
+			            IF(
+			                ISFILTERED( tbl_project_perspective_rows[project_identity] )
+			                    && HASONEVALUE( tbl_project_perspective_rows[project_id] )
+			                    && NOT ISBLANK( [prj_key_facts] ),
+			                LOOKUPVALUE( tbl_projects[project_name], tbl_projects[project_id], SELECTEDVALUE( tbl_project_perspective_rows[project_id] ) )
+			            ),
+			        4,
+			            IF(
+			                ISFILTERED( tbl_tools[tool_row_label] )
+			                    && HASONEVALUE( tbl_tools[tool_id] )
+			                    && [tech_in_scope] = 1,
+			                SELECTEDVALUE( tbl_tools[tool_display_name] )
+			            ),
+			        7,
+			            IF(
+			                ISFILTERED( tbl_skills[skill_row_label] )
+			                    && HASONEVALUE( tbl_skills[skill_id] )
+			                    && [skills_in_scope] = 1,
+			                SELECTEDVALUE( tbl_skills[skill_name] )
+			            )
+			    )
+		lineageTag: 598b5267-13cd-492f-b45c-5533c081ed7c
+
+	measure status_bar_text =
+			VAR _sheet = SELECTEDVALUE( tbl_sheet_tabs[sheet_tab_id], 1 )
+			VAR _gap = REPT( UNICHAR( 160 ), 8 )
+			VAR _tool_avg =
+			    AVERAGEX(
+			        FILTER( VALUES( tbl_tools[tool_id] ), [tech_in_scope] = 1 ),
+			        CALCULATE( SELECTEDVALUE( tbl_tools[overall_proficiency_level] ) )
+			    )
+			VAR _skill_avg =
+			    AVERAGEX(
+			        FILTER( VALUES( tbl_skills[skill_id] ), [skills_in_scope] = 1 ),
+			        CALCULATE( SELECTEDVALUE( tbl_skills[overall_proficiency_level] ) )
+			    )
+			VAR _text =
+			    SWITCH(
+			        _sheet,
+			        2, "Count: " & [exp_visible_count],
+			        3, "Count: " & [prj_visible_count],
+			        4, IF( ISBLANK( _tool_avg ), "", "Average: " & FORMAT( _tool_avg, "0.0" ) & _gap ) & "Count: " & [tech_visible_count],
+			        5, "Count: " & COUNTROWS( tbl_education ),
+			        6, "Count: " & COUNTROWS( tbl_additional_items ),
+			        7, IF( ISBLANK( _skill_avg ), "", "Average: " & FORMAT( _skill_avg, "0.0" ) & _gap ) & "Count: " & [skills_visible_count]
+			    )
+			RETURN _text & ""
+		lineageTag: 5f65f2d8-0541-4e6a-a68b-e77ed046d7dc
+
+	measure exec_hl_additional_id =
+			MAXX(
+			    TOPN(
+			        1,
+			        FILTER( ALL( tbl_additional ), tbl_additional[is_highlight] = TRUE() ),
+			        tbl_additional[from_year], DESC,
+			        tbl_additional[additional_id], ASC
+			    ),
+			    tbl_additional[additional_id]
+			)
+		formatString: 0
+		lineageTag: 6a6ffb6a-3253-434c-a223-9ad63a28f68a
+
+	measure exec_hl_title =
+			VAR _id = [exec_hl_additional_id]
+			RETURN
+			    IF(
+			        ISBLANK( _id ),
+			        "",
+			        LOOKUPVALUE( tbl_additional[title], tbl_additional[additional_id], _id )
+			            & "  ·  "
+			            & LOOKUPVALUE( tbl_additional[from_year], tbl_additional[additional_id], _id )
+			    )
+		lineageTag: ab28fda8-9312-46fa-8971-241825fc8df7
+
+	measure exec_hl_detail =
+			VAR _id = [exec_hl_additional_id]
+			RETURN LOOKUPVALUE( tbl_additional[detail], tbl_additional[additional_id], _id ) & ""
+		lineageTag: 237645f3-282d-4ae7-9a3f-ea6c124b3297
+
+	measure exec_hl_url =
+			VAR _id = [exec_hl_additional_id]
+			RETURN LOOKUPVALUE( tbl_additional[url], tbl_additional[additional_id], _id )
+		lineageTag: 0d5f7a24-012e-4a20-a747-8cd9f27073f7
+
+	measure exec_hl_link_label =
+			VAR _url = [exec_hl_url]
+			RETURN
+			    IF(
+			        ISBLANK( _url ),
+			        "",
+			        IF( CONTAINSSTRING( _url, "youtube" ), "▶  Watch on YouTube", "Open link" )
+			    )
+		lineageTag: 9ec9be01-640f-42f2-a208-635fd629c8b8
+
+	measure pnl_selected =
+			IF(
+			    ( ISFILTERED( tbl_project_perspective_rows[project_identity] )
+			        && HASONEVALUE( tbl_project_perspective_rows[project_id] ) )
+			        || ( ISFILTERED( tbl_role_perspective_rows[role_identity] )
+			        && HASONEVALUE( tbl_role_perspective_rows[role_id] ) ),
+			    1
+			)
+		formatString: 0
+		lineageTag: c982ed90-9f37-4cf0-9ce4-11ee1a1ff87c
+
+	measure pnl_title = IF( [pnl_selected] = 1, [sel_title] ) & ""
+		lineageTag: 1459a398-0c6b-4745-b692-7ed54239f513
+
+	measure pnl_period = IF( [pnl_selected] = 1, [sel_period] ) & ""
+		lineageTag: bdbbe2c3-5a1e-48a1-872c-e5c66ecd9a9e
+
+	measure pnl_chips = IF( [pnl_selected] = 1, [sel_chips] ) & ""
+		lineageTag: dd860fcb-9f1c-4031-8ee0-aebaab8bd713
+
+	measure pnl_tools = IF( [pnl_selected] = 1, [sel_tools] ) & ""
+		lineageTag: 5233af3d-b565-482f-a2c0-b8767b7a8bb9
+
+	measure pnl_highlight = IF( [pnl_selected] = 1, [sel_highlight] ) & ""
+		lineageTag: d5a69b6b-0bbb-4da2-87e9-adc54d55bd4d
+
+	measure pnl_footnote = IF( [pnl_selected] = 1, [sel_footnote] ) & ""
+		lineageTag: 64de995c-3410-4aff-a9a7-b166f09f70f8
+
+	measure pnl_radar_svg =
+			VAR _svg = [sel_radar_svg]
+			RETURN
+			    IF(
+			        [pnl_selected] = 1,
+			        SUBSTITUTE(
+			            SUBSTITUTE(
+			                SUBSTITUTE( _svg, "font-size=""10""", "font-size=""12""" ),
+			                "dy=""11""", "dy=""13"""
+			            ),
+			            "viewBox=""21 45 478 304"" width=""478""", "viewBox=""8 45 504 304"" width=""504"""
+			        )
+			    )
+		lineageTag: 8ec2b264-5a26-4960-8ed0-d7932b293e73
+		dataCategory: ImageUrl
+
+	measure pnl_hint = IF( [pnl_selected] = 1, "", "Select a project to see its profile." )
+		lineageTag: 01622247-dfe2-4938-8baf-a1c14271885c
+
+	measure pnl_hint_role = IF( [pnl_selected] = 1, "", "Select a role to see its profile." )
+		lineageTag: 78a3bb3b-87d9-44c7-bc58-546df34fad8a
+
+	measure pnl_override = IF( [pnl_selected] = 1, [sel_override_display] ) & ""
+		lineageTag: 9efd50f6-9967-4223-9ff4-3bbb0f92ecf9
+
+	measure contact_email_primary_url =
+			VAR _v =
+			    CALCULATE(
+			        MAX( tbl_contact_methods[method_value] ),
+			        REMOVEFILTERS( tbl_contact_methods ),
+			        tbl_contact_methods[method_type] = "email",
+			        tbl_contact_methods[is_primary] = TRUE()
+			    )
+			RETURN IF( NOT ISBLANK( _v ), "mailto:" & _v )
+		lineageTag: da2f233f-e647-48a6-9907-50f3bfefb0f8
+
+	measure contact_email_secondary_url =
+			VAR _t =
+			    CALCULATETABLE(
+			        tbl_contact_methods,
+			        REMOVEFILTERS( tbl_contact_methods ),
+			        tbl_contact_methods[method_type] = "email",
+			        tbl_contact_methods[is_primary] = FALSE()
+			    )
+			VAR _v = MAXX( TOPN( 1, _t, tbl_contact_methods[display_order], ASC ), tbl_contact_methods[method_value] )
+			RETURN IF( NOT ISBLANK( _v ), "mailto:" & _v )
+		lineageTag: b620bcdf-a82a-48d4-8af1-4383a219b83a
+
+	measure contact_linkedin_url =
+			CALCULATE(
+			    MAX( tbl_contact_methods[method_value] ),
+			    REMOVEFILTERS( tbl_contact_methods ),
+			    tbl_contact_methods[method_type] = "linkedin"
+			)
+		lineageTag: 5123dd05-1b77-4fbe-835e-a912826c0117
+
+	column _
+		lineageTag: e44c2537-a5bf-40b5-8d8d-07786ee0867d
+		isNameInferred
+		sourceColumn: [_]
+
+	partition _measures = calculated
+		mode: import
+		source = DATATABLE( "_", STRING, {{ "_" }} )
+
+	annotation PBI_ResultType = Table
+

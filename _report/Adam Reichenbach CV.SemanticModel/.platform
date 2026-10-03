@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Adam Reichenbach CV"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "63bda397-cbcc-49cc-9044-765fad681112"
+  }
+}

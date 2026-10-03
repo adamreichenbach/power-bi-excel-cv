@@ -1,0 +1,44 @@
+table tbl_perspectives
+	lineageTag: 172a902f-c1b5-40d5-ac6f-2d9e5b241e74
+
+	column perspective_id
+		dataType: int64
+		formatString: 0
+		lineageTag: f4c1a4c8-58bd-4756-b1ed-71ad96fff4dd
+		summarizeBy: none
+		sourceColumn: perspective_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column perspective_name
+		dataType: string
+		lineageTag: 4f536d77-5e90-4ba4-9712-32bb255ef765
+		summarizeBy: none
+		sourceColumn: perspective_name
+		sortByColumn: perspective_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbl_perspectives = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(
+				        File.Contents(#"cv_source_path"),
+				        null,
+				        true
+				    ),
+				    tbl_perspectives_Table = Source{[Item = "tbl_perspectives", Kind = "Table"]}[Data],
+				    #"Changed Type" =
+				        Table.TransformColumnTypes(
+				            tbl_perspectives_Table,
+				            {
+				                {"perspective_id", Int64.Type},
+				                {"perspective_name", type text}
+				            }
+				        )
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

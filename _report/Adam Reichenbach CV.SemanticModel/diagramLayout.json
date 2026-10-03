@@ -1,0 +1,451 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 4092.8055723204457,
+            "y": 621.2401457768367
+          },
+          "nodeIndex": "_measures",
+          "nodeLineageTag": "c0f3c4fb-17f2-448c-8955-8de0c9bcec11",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4376.8055723204452,
+            "y": 595.2401457768367
+          },
+          "nodeIndex": "dim_calendar",
+          "nodeLineageTag": "d3d72671-e3ec-4dda-8cfd-bf324431b5e8",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4660.8055723204452,
+            "y": 657.2401457768367
+          },
+          "nodeIndex": "tbl_detail_levels",
+          "nodeLineageTag": "5e1e46c5-e800-42da-86f6-da0d02ec1b42",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4944.8055723204452,
+            "y": 645.2401457768367
+          },
+          "nodeIndex": "tbl_perspectives",
+          "nodeLineageTag": "172a902f-c1b5-40d5-ac6f-2d9e5b241e74",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 5228.8055723204452,
+            "y": 609.2401457768367
+          },
+          "nodeIndex": "tbl_profile",
+          "nodeLineageTag": "24be6512-8c98-4983-974e-8152e369f099",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 5512.8055723204452,
+            "y": 657.2401457768367
+          },
+          "nodeIndex": "tbl_view_modes",
+          "nodeLineageTag": "0cb70c8a-fcba-4fd6-b0c2-239150c7062e",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 5796.8055723204452,
+            "y": 645.2401457768367
+          },
+          "nodeIndex": "tbl_sheet_tabs",
+          "nodeLineageTag": "434a9094-aaea-4346-8d7d-7f0ec8948dab",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1586.8055723204457,
+            "y": 645.2401457768367
+          },
+          "nodeIndex": "tbl_achievements",
+          "nodeLineageTag": "99c35906-c40b-4d88-868e-c0c5a74f0c5c",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1870.8055723204457,
+            "y": 633.2401457768367
+          },
+          "nodeIndex": "tbl_additional",
+          "nodeLineageTag": "589a1a69-0331-4583-ac61-5d53bdcbb5fe",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2154.8055723204457,
+            "y": 657.2401457768367
+          },
+          "nodeIndex": "tbl_certifications",
+          "nodeLineageTag": "4472ec26-2930-4acc-b09c-ad1890ad9072",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2438.8055723204457,
+            "y": 621.2401457768367
+          },
+          "nodeIndex": "tbl_education",
+          "nodeLineageTag": "2d36c7bd-6e35-4568-afc3-a74e3a25770d",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 341.96948738700416,
+            "y": 565.963699296978
+          },
+          "nodeIndex": "tbl_employers",
+          "nodeLineageTag": "eb727951-37f0-48ca-8e47-2daed71d2a06",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2722.8055723204457,
+            "y": 669.2401457768367
+          },
+          "nodeIndex": "tbl_exec_summary_content",
+          "nodeLineageTag": "04798fb5-dc61-4821-90a8-8686fecc72c6",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 631.9182767357803,
+            "y": 729.84671951168332
+          },
+          "nodeIndex": "tbl_functions",
+          "nodeLineageTag": "45d39693-5b79-47aa-838b-cb3fb5eb3fa8",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 342.04565023034894,
+            "y": 771.40575710928817
+          },
+          "nodeIndex": "tbl_industries",
+          "nodeLineageTag": "4821fc3b-551b-4c75-8948-95321028aa40",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3290.8055723204457,
+            "y": 669.2401457768367
+          },
+          "nodeIndex": "tbl_languages",
+          "nodeLineageTag": "081f718a-d0ba-4c50-8d00-8dc02020ab77",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 574.94568587660683,
+            "y": 1240.4802915536734
+          },
+          "nodeIndex": "tbl_project_content",
+          "nodeLineageTag": "b726e156-74eb-41f9-aa4c-d243a40e2374",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 284.35044020003119,
+            "y": 1065.5906741436356
+          },
+          "nodeIndex": "tbl_project_skill",
+          "nodeLineageTag": "98da4e7a-ed23-44e5-bde4-a6af83381658",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 921.98741023269724,
+            "y": 857.66427207026163
+          },
+          "nodeIndex": "tbl_project_tool",
+          "nodeLineageTag": "c1669aa6-72f5-49b5-855c-fcdcbbf2cf39",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 631.93197590787543,
+            "y": 912.81255720676279
+          },
+          "nodeIndex": "tbl_projects",
+          "nodeLineageTag": "96d59b47-b85c-4349-b80d-35219843c5c5",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 568.37891097677425,
+            "y": -50
+          },
+          "nodeIndex": "tbl_role_content",
+          "nodeLineageTag": "f728bce2-0241-412b-a570-1c571baf8267",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 508.39202465327742
+          },
+          "nodeIndex": "tbl_role_skill",
+          "nodeLineageTag": "6874e29c-2e85-4040-a158-25ae0c8d4128",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 779.17096859433957,
+            "y": 204.64911136869887
+          },
+          "nodeIndex": "tbl_role_tool",
+          "nodeLineageTag": "e9384e6e-b6bb-4267-8c15-4a15660f4d8c",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 279.06465379522064,
+            "y": 2.3986195604220484
+          },
+          "nodeIndex": "tbl_role_types",
+          "nodeLineageTag": "94f19dc6-bead-4910-a13a-a985affe518e",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 489.649053291618,
+            "y": 210.19635489618815
+          },
+          "nodeIndex": "tbl_roles",
+          "nodeLineageTag": "19885c51-c03c-47cf-b524-4578871c2b66",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 52.358070153996664,
+            "y": 834.84543919128441
+          },
+          "nodeIndex": "tbl_skills",
+          "nodeLineageTag": "02475a74-3b82-467b-9a19-95d9643e01d1",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1352.8055723204454,
+            "y": 533.56476712348081
+          },
+          "nodeIndex": "tbl_tool_content",
+          "nodeLineageTag": "64c15a96-79f0-48e1-aa3b-4864790ed35b",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1352.79343252758,
+            "y": 284.37976831011406
+          },
+          "nodeIndex": "tbl_tool_groups",
+          "nodeLineageTag": "ea43a6d3-1231-4de8-8099-04b502df408b",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1062.8382895167101,
+            "y": 432.81045284838251
+          },
+          "nodeIndex": "tbl_tools",
+          "nodeLineageTag": "79aca26a-27e1-4557-a36b-ff0b1f8d4611",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 5528.8055723204452,
+            "y": 609.2401457768367
+          },
+          "nodeIndex": "tbl_contact_methods",
+          "nodeLineageTag": "5f2a7c31-6b48-4e19-9d02-7a3c5e81f4b6",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 6030.8055723204452,
+            "y": 645.2401457768367
+          },
+          "nodeIndex": "tbl_education_content",
+          "nodeLineageTag": "c18f3c4b-7cda-4fe7-8a75-c92c9ce80c52",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 6314.8055723204452,
+            "y": 597.2401457768367
+          },
+          "nodeIndex": "tbl_project_perspective_rows",
+          "nodeLineageTag": "0d8f89b7-19a8-4e32-9598-9b98447755f2",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 6598.8055723204452,
+            "y": 597.2401457768367
+          },
+          "nodeIndex": "tbl_role_perspective_rows",
+          "nodeLineageTag": "cc41c63b-d2df-4d2c-820a-a85a27af9b90",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

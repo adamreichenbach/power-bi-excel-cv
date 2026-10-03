@@ -1,0 +1,44 @@
+table tbl_view_modes
+	lineageTag: 0cb70c8a-fcba-4fd6-b0c2-239150c7062e
+
+	column view_mode_id
+		dataType: int64
+		formatString: 0
+		lineageTag: ee5dd9d5-95ba-4aa6-b0a9-092c3aacbb9e
+		summarizeBy: none
+		sourceColumn: view_mode_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column mode
+		dataType: string
+		lineageTag: ff68a54f-f3f6-420a-adbc-bf29f3441382
+		summarizeBy: none
+		sourceColumn: mode
+		sortByColumn: view_mode_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbl_view_modes = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(
+				        File.Contents(#"cv_source_path"),
+				        null,
+				        true
+				    ),
+				    tbl_view_modes_Table = Source{[Item = "tbl_view_modes", Kind = "Table"]}[Data],
+				    #"Changed Type" =
+				        Table.TransformColumnTypes(
+				            tbl_view_modes_Table,
+				            {
+				                {"view_mode_id", Int64.Type},
+				                {"mode", type text}
+				            }
+				        )
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
